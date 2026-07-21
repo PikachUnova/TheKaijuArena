@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Rex's Adventure.slnx",
+    "dotnet.defaultSolution": "TheKaijuArena.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
