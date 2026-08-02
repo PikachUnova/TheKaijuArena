@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 48c74da89d06f4a5baea63e4cc42781f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - fire: {fileID: 3767986700269957175, guid: cdc4e4946f74f4bf0aa81d33df4fec12, type: 3}
+  - fireHome: {fileID: 9058714003877577319, guid: 7740bcdd289aa4d3db52f285fa6eae8f, type: 3}
+  - ice: {instanceID: 0}
+  - fireBreath: {instanceID: 0}
+  - RainOfFireballs: {instanceID: 0}
+  - fireMuzzle: {instanceID: 0}
+  - fireMuzzleHome: {instanceID: 0}
+  - anim: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

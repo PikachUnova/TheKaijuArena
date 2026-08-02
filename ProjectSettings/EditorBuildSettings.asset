@@ -6,7 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  m_configObjects: {}
+    path: Assets/Scenes/Rex'sHouse/Rex'sHouse.unity
+    guid: 5262765ae57a2462aa424b499c8e5cf1
+  - enabled: 1
+    path: Assets/Scenes/KaijuPlaza/KaijuPlaza.unity
+    guid: a01e21c6d41cb4779bcb60138ca5918d
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: d54729f0fe5a04b6fa3bf55a6d180b96, type: 3}
   m_UseUCBPForAssetBundles: 0
