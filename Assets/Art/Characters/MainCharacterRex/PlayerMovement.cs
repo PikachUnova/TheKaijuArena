@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     public CinemachineCamera freeLookCamera;  // Reference to the FreeLook Camera
-    public CinemachineCamera virtualCamera;  // Reference to the Virtual Camera
+    public CinemachineCamera TPCamera;  // Reference to the Virtual Camera
     private bool isAiming = false;
     private AudioSource audioSource;
 
@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_jumpAction;
     private InputAction m_sprintAction;
     private InputAction m_shootAction;
+    private InputAction m_aimAction;
 
     // Start is called before the first frame update
     void Start()
@@ -70,11 +71,12 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("MovementSpeed", 0f);
 
         audioSource = GetComponent<AudioSource>();
-        //virtualCamera.gameObject.SetActive(false);
+        TPCamera.gameObject.SetActive(false);
         
         m_jumpAction = InputSystem.actions.FindAction("Jump");
         m_sprintAction = InputSystem.actions.FindAction("Sprint");
         m_shootAction = InputSystem.actions.FindAction("Shoot");
+        m_aimAction = InputSystem.actions.FindAction("Aim");
 
     }
 
@@ -91,26 +93,25 @@ public class PlayerMovement : MonoBehaviour
         if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
             animator.Play("Shoot");
         
-
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
         isGrounded = Physics.CheckSphere(spherePosition, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore); // Update Grounded
 
-        if (Input.GetMouseButtonDown(1)) // Trigger Aiming
+        if (m_aimAction.WasPressedThisFrame()) // Trigger Aiming
         {
             if (!isAiming)
             {
                 isAiming = true;
-                //LockCameraRotation(true);
+                LockCameraRotation(true);
                 freeLookCamera.gameObject.SetActive(false);
-                virtualCamera.gameObject.SetActive(true);
+                TPCamera.gameObject.SetActive(true);
             }
             else
             {
                 isAiming = false;
-                //LockCameraRotation(false);
+                LockCameraRotation(false);
                 freeLookCamera.gameObject.SetActive(true);
-                virtualCamera.gameObject.SetActive(false);
+                TPCamera.gameObject.SetActive(false);
             }
         }
 
@@ -150,11 +151,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 Vector3 moveDirectionAngle = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-
-                if (IsOnSlipperySurface())
-                    velocity = Vector3.Lerp(velocity, moveDirectionAngle.normalized * moveSpeed, 0.01f);
-                else
-                    MoveOnSlope(moveDirectionAngle);
+                MoveOnSlope(moveDirectionAngle);
                 Run();
             }
         }
@@ -163,12 +160,6 @@ public class PlayerMovement : MonoBehaviour
             ShootAim();
             MoveAim();
             Run();
-        }
-
-        if (!IsOnSlipperySurface()) // No slipping after leaving the slippery surface
-        {
-            velocity.x = 0f;
-            velocity.z = 0f;
         }
     }
 
@@ -202,17 +193,6 @@ public class PlayerMovement : MonoBehaviour
                 controller.Move(-slideDirection.normalized * slideSpeed * Time.deltaTime);
             }
         }
-    }
-
-    private bool IsOnSlipperySurface()
-    {
-        Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1f))
-        {
-            if (hit.collider.sharedMaterial != null && hit.collider.sharedMaterial.name.Contains("Slippery"))
-                return true;
-        }
-        return false;
     }
 
     void Run()
@@ -324,13 +304,11 @@ public class PlayerMovement : MonoBehaviour
             if (lockRotation)
             {
                 if (inputAxisOwner != null) inputAxisOwner.enabled = false; // Disables camera rotation input
-                freeLookCamera.Lens.FieldOfView = 30f;
             }
             else
             {
                 if (inputAxisOwner != null) inputAxisOwner.enabled = true; // Re-enables camera rotation input
                 StartCoroutine(SmoothlyResetLookTargetPosition());
-                freeLookCamera.Lens.FieldOfView = 40f;
             }
         }
     }
@@ -377,12 +355,8 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
 
         if (IsMoving())
-        {
-            if (IsOnSlipperySurface())
-                velocity = Vector3.Lerp(velocity, moveDirection.normalized * moveSpeed, 0.01f);
-            else
-                controller.Move(moveDirection * moveSpeed * Time.deltaTime);
-        }
+            controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+        
     }
 
     public void MoveLookTarget(float x, float y, float z) // Move looking point at the desired position

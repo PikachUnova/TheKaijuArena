@@ -17,7 +17,7 @@ public class PlayerShooter : MonoBehaviour
     private float timeUntilNextShot;
 
     // Projectile types
-    public enum projectileType { fire}
+    public enum projectileType {fire}
 
     // Muzzles
     public ParticleSystem fireMuzzle;
@@ -27,6 +27,8 @@ public class PlayerShooter : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        fireMuzzle.GetComponent<ParticleSystem>().Stop();
+        fireMuzzleHome.GetComponent<ParticleSystem>().Stop();
     }
 
     // Update is called once per frame
@@ -40,14 +42,22 @@ public class PlayerShooter : MonoBehaviour
     {
         canShoot = false;
         timeUntilNextShot = Time.time + timeBetweenShots;
-
         ShootFire();
-          
     }
 
     void ShootFire()
     {
-        Instantiate(fire, this.transform.position, this.transform.rotation);
+        int randomFire = Random.Range(0, 3); 
+        if (randomFire == 0)
+        {
+            Instantiate(fireHome, this.transform.position, this.transform.rotation);
+            fireMuzzleHome.GetComponent<ParticleSystem>().Play();
+        }
+        else
+        {
+            Instantiate(fire, this.transform.position, this.transform.rotation);
+            fireMuzzle.GetComponent<ParticleSystem>().Play();
+        }
     }
     
 }

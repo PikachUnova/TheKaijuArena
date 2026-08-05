@@ -13,8 +13,9 @@ public class SceneLoader : MonoBehaviour
         // The contacted object navigates the player 
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(sceneData.sceneName);
+            SceneManager.LoadScene("KaijuPlaza");
         }
+        //sceneData.sceneName
     }
     
 }

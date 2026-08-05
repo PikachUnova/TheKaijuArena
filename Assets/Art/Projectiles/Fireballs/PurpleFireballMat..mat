@@ -20,28 +20,28 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PurpleFireballABMat.
-  m_Shader: {fileID: -6465566751694194690, guid: 1a7e886a288b94518bad65c62d032f6b, type: 3}
+  m_Name: PurpleFireballMat.
+  m_Shader: {fileID: -6465566751694194690, guid: f5025ee574dff425c84dfa1129d6a20f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
-  - DepthOnly
   - MOTIONVECTORS
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 8001a35e1b9d942169b1cc69ad4b86e5, type: 3}
+        m_Texture: {fileID: 2800000, guid: d417c3092142444828704acb0d91786e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8001a35e1b9d942169b1cc69ad4b86e5, type: 3}
+        m_Texture: {fileID: 2800000, guid: d417c3092142444828704acb0d91786e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Main_Texture:
@@ -107,7 +107,7 @@ Material:
     - _AlphaToMask: 0
     - _BUILTIN_QueueControl: 1
     - _BUILTIN_QueueOffset: 0
-    - _Blend: 0
+    - _Blend: 2
     - _BlendModePreserveSpecular: 0
     - _BlendOp: 0
     - _BumpScale: 1
@@ -127,8 +127,8 @@ Material:
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0.1
-    - _DstBlend: 10
-    - _DstBlendAlpha: 10
+    - _DstBlend: 1
+    - _DstBlendAlpha: 1
     - _EnvironmentReflections: 1
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
@@ -158,12 +158,12 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 0.3791385, g: 0.0035599943, b: 0.754717, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _Base_Color: {r: 18.572546, g: 0, b: 47.93725, a: 1}
+    - _Base_Color: {r: 21.442453, g: 1.0761197, b: 45.627476, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.37913844, g: 0.0035599943, b: 0.75471693, a: 1}
-    - _EmissionColor: {r: 0.24266574, g: 0, b: 1.0717734, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0.21583517, g: 0.028409371, b: 0.86039764, a: 1}
     - _NoiseSpeed: {r: 0.3, g: 0.3, b: 0, a: 0}
     - _SecondaryColor: {r: 2.2116337, g: 0.4663066, b: 0.05216116, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
