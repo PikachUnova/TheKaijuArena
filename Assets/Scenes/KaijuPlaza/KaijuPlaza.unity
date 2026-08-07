@@ -119,6 +119,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &55255156
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 40.320038
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000012755394
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 104.25046
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122500899788482654, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
+      propertyPath: m_Name
+      value: Dino_Wanderer (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
 --- !u!1 &108804832
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +392,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &541723709
+--- !u!1001 &617566986
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -345,19 +402,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.7
+      value: 39.270096
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.67
+      value: -0.00000423193
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 136.5
+      value: 106.462395
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -365,7 +422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.z
@@ -377,7 +434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -385,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2122500899788482654, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_Name
-      value: Dino_Wanderer (2)
+      value: Dino_Wanderer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -450,13 +507,13 @@ Transform:
   m_GameObject: {fileID: 697490999}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 54.164276, y: -34.2, z: 309.6304}
+  m_LocalPosition: {x: 54.164276, y: -34.35, z: 309.6304}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &799527813
+--- !u!1001 &772886827
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -466,19 +523,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.7
+      value: 34.03616
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.67
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 98.3
+      value: 96.82182
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -486,7 +543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.z
@@ -498,7 +555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -506,7 +563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2122500899788482654, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_Name
-      value: Dino_Wanderer (1)
+      value: Dino_Wanderer (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -727,7 +784,7 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1001 &1887753749189016279
+--- !u!1001 &1236681487
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -737,19 +794,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.05
+      value: 40.45
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.67
+      value: -0.000012099743
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 119.5
+      value: 95.31758
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -757,7 +814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalRotation.z
@@ -769,7 +826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603127528164602596, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -777,7 +834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2122500899788482654, guid: 19f3486f9e02247e7b4a24a5de23034b, type: 3}
       propertyPath: m_Name
-      value: Dino_Wanderer
+      value: Dino_Wanderer (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -848,9 +905,10 @@ SceneRoots:
   - {fileID: 1145789393}
   - {fileID: 1028845027}
   - {fileID: 375032496}
-  - {fileID: 1887753749189016279}
-  - {fileID: 799527813}
-  - {fileID: 541723709}
   - {fileID: 108804836}
   - {fileID: 697491001}
   - {fileID: 9199763512439413645}
+  - {fileID: 617566986}
+  - {fileID: 55255156}
+  - {fileID: 772886827}
+  - {fileID: 1236681487}

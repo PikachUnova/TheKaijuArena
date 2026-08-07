@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6e604344875847729e195251706ff56, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.26
+      value: 3.0411296
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6e604344875847729e195251706ff56, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6e604344875847729e195251706ff56, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.13
+      value: 0.77181244
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6e604344875847729e195251706ff56, type: 3}
       propertyPath: m_LocalRotation.w
@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: c418fad2df80c45209b14bdbf3d730db, type: 2}
+    - target: {fileID: -5490534580816686477, guid: b6e604344875847729e195251706ff56, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6e604344875847729e195251706ff56, type: 3}
       propertyPath: m_Name
       value: Dino_Enemy
@@ -96,7 +100,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e604344875847729e195251706ff56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8938008609777973284}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e604344875847729e195251706ff56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2250194663193986135}
   m_SourcePrefab: {fileID: 100100000, guid: b6e604344875847729e195251706ff56, type: 3}
+--- !u!1 &1088136282648789648 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5660895710479726585, guid: b6e604344875847729e195251706ff56, type: 3}
+  m_PrefabInstance: {fileID: 4497305434405472919}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3650390316124551110 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e604344875847729e195251706ff56, type: 3}
@@ -146,7 +158,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1.4
   m_Direction: 1
-  m_Center: {x: 0, y: 0.25, z: -0.1}
+  m_Center: {x: 0, y: 0.65, z: -0.1}
 --- !u!135 &3607749482696353360
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -190,3 +202,24 @@ NavMeshAgent:
   m_BaseOffset: 0.45
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2250194663193986135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650390316124551110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706933e5e67e34d7db5808a22ac935b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  detectionRange: 12
+  attackRange: 2
+  retreatDistance: 3
+  attackDuration: 1
+  minAttackCooldown: 2
+  maxAttackCooldown: 4
+  retreatTime: 0.01
+  armature: {fileID: 1088136282648789648}
