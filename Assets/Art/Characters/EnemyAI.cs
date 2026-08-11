@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour
         Chase,
         Attack,
         Shoot,
-        Retreat
+        Dash
     }
 
     [SerializeField] protected int attackPower = 5;
@@ -45,12 +45,6 @@ public class EnemyAI : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void Update()
-    {
-
-    }
-
-
     protected void SetMovement(float speed)
     {
         animator.SetFloat("MovementSpeed", speed, 0f, Time.deltaTime);
@@ -61,14 +55,5 @@ public class EnemyAI : MonoBehaviour
         player.GetComponent<PlayerHealth>().TakeDamage(attackPower);
     }
 
-
-    void ShootE()
-    {
-        // Spawn projectile
-        if (fire != null && projectileSpawnPoint != null)
-        {
-            GameObject projectile = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-        }
-    }
 
 }

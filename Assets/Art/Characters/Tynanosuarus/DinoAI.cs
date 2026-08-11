@@ -26,7 +26,6 @@ public class DinoAI : EnemyAI
             return;
 
         float distance = Vector3.Distance(transform.position, player.position);
-
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -38,6 +37,7 @@ public class DinoAI : EnemyAI
                 break;
 
             case EnemyState.Chase:
+
                 shootTimer += Time.deltaTime;
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
@@ -46,14 +46,7 @@ public class DinoAI : EnemyAI
                 if (distance <= attackRange)
                     StartCoroutine(AttackRoutine());
                 else if (distance >= rangedAttackRange && distance <= detectionRange && shootCooldown <= shootTimer)
-                {
                     StartCoroutine(RangedAttackRoutine());
-                }
-
-                break;
-
-            case EnemyState.Retreat:
-
                 break;
         }
     }
@@ -137,6 +130,15 @@ public class DinoAI : EnemyAI
         agent.isStopped = false;
         isBusy = false;
         shootTimer = 0;
+    }
+
+    void ShootE()
+    {
+        // Spawn projectile
+        if (fire != null && projectileSpawnPoint != null)
+        {
+            GameObject projectile = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+        }
     }
 
 }

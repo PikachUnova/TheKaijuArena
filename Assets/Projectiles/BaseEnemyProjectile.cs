@@ -25,12 +25,14 @@ public class BaseEnemyProjectile : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) // Damage Player
         {
             other.GetComponent<PlayerHealth>().TakeDamage(attackPower);
-            Instantiate(impact, transform.position, transform.rotation);
+            if (impact != null)
+                Instantiate(impact, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("Grass"))
         {
-            Instantiate(impact, transform.position, transform.rotation);
+            if (impact != null)
+                Instantiate(impact, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
     }
