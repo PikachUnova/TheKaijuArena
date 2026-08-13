@@ -18,7 +18,8 @@ public class UIHandler : MonoBehaviour
 
     void Start()
     {
-        healthBar.maxValue = 100;
+        health = stats.maxHealth;
+        healthBar.maxValue = health;
         fill.color = gradient.Evaluate(1f);
         if (UIHandler.handler != null)
         {

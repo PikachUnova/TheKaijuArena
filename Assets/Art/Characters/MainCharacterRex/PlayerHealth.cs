@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
-    private CharacterStats stats;
+    public CharacterStats stats;
     public float currentHealth;
 
     // Player's starting point
@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentHealth = maxHealth;
+        currentHealth = stats.maxHealth;
         animator = GetComponent<Animator>();
     }
 

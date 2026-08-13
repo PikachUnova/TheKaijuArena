@@ -184,10 +184,10 @@ PrefabInstance:
       addedObject: {fileID: 8938008609777973284}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e604344875847729e195251706ff56, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2250194663193986135}
+      addedObject: {fileID: 7376262350740011748}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b6e604344875847729e195251706ff56, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7376262350740011748}
+      addedObject: {fileID: 913388232785654409}
   m_SourcePrefab: {fileID: 100100000, guid: b6e604344875847729e195251706ff56, type: 3}
 --- !u!1 &3650390316124551110 stripped
 GameObject:
@@ -261,28 +261,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2250194663193986135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3650390316124551110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706933e5e67e34d7db5808a22ac935b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPower: 4
-  player: {fileID: 0}
-  projectileSpawnPoint: {fileID: 8148204454145412617}
-  fire: {fileID: 8053896815298010388, guid: 5b8451db9af32423bb6b9cf08743112d, type: 3}
-  detectionRange: 20
-  attackRange: 2.5
-  rotationSpeed: 360
-  attackDuration: 1
-  shootCooldown: 2
-  aimDuration: 0.3
 --- !u!114 &7376262350740011748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,9 +273,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b77786ddb02a4b67abe7f8283fbfb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  stats: {fileID: 11400000, guid: eb7fd7c307d4f4e6fb2f6bb35c7e1033, type: 2}
   currentHealth: 0
   healthBar: {fileID: 5380004507245080394}
+--- !u!114 &913388232785654409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650390316124551110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f484c62f6477142bb9d14bdb4fc1a4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPower: 5
+  player: {fileID: 0}
+  projectileSpawnPoint: {fileID: 8148204454145412617}
+  fire: {fileID: 8053896815298010388, guid: 5b8451db9af32423bb6b9cf08743112d, type: 3}
+  detectionRange: 20
+  attackRange: 2
+  rangedAttackRange: 4
+  movementSpeed: 4
+  rotationSpeed: 360
+  attackDuration: 1
+  shootCooldown: 2
+  aimDuration: 0.5
 --- !u!4 &4171206312250666364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b6e604344875847729e195251706ff56, type: 3}
@@ -396,12 +398,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2319910238320601538, guid: 62b92421a347d49c7a81e1c061ccbb83, type: 3}
       propertyPath: m_Value
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2319910238320601538, guid: 62b92421a347d49c7a81e1c061ccbb83, type: 3}
       propertyPath: m_FillRect
       value: 
       objectReference: {fileID: 3112296150072299761}
+    - target: {fileID: 2319910238320601538, guid: 62b92421a347d49c7a81e1c061ccbb83, type: 3}
+      propertyPath: m_MaxValue
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 2708676488245521082, guid: 62b92421a347d49c7a81e1c061ccbb83, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

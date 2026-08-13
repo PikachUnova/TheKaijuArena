@@ -2,36 +2,42 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 100;
-    private CharacterStats stats;
+    public CharacterStats stats;
     public int currentHealth;
 
     private Animator animator;
     public EnemyHealthBar healthBar;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private bool isInvulnerable = false;
+
     void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = stats.maxHealth;
+        healthBar.SetMaxHealth(currentHealth);
         animator = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damage)
     {
+        if (isInvulnerable) return;
+
         currentHealth -= damage;
-        healthBar.SetHealth(currentHealth - damage);
+        healthBar.SetHealth(currentHealth);
         animator.Play("Hurt");
 
         if (currentHealth <= 0)
-        {
             Faint();
-        }
+        
     }
 
     public void Faint()
     {
         animator.Play("Death");
+    }
+
+    public void SetInvulnerable(bool value)
+    {
+        isInvulnerable = value;
     }
 
 

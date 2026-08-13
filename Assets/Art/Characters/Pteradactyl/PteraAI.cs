@@ -33,9 +33,16 @@ public class PteraAI : EnemyAI
     void Update()
     {
         if (player == null || isBusy || !isFlying 
-        || this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0
-        || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+            || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
             return;
+        
+        if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
+        {
+            this.enabled = false;
+            agent.velocity = Vector3.zero;
+            agent.isStopped = true;
+        }
+        
 
         float distance = Vector3.Distance(transform.position, player.position);
         switch (currentState)

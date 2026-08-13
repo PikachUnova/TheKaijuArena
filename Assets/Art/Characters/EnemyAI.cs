@@ -10,6 +10,7 @@ public class EnemyAI : MonoBehaviour
         Chase,
         Attack,
         Shoot,
+        Retreat,
         Dash
     }
 
@@ -28,6 +29,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected float attackRange = 2f;
     [SerializeField] protected float rangedAttackRange = 4f;
 
+    [SerializeField] protected float movementSpeed = 4f;
     [SerializeField] protected float rotationSpeed = 360f;
 
     [Header("Timing")]
@@ -40,6 +42,7 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         animator = GetComponent<Animator>();
+        agent.speed = movementSpeed;
 
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
