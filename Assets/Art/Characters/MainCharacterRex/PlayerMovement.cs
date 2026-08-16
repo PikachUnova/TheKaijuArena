@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_shootAction;
     private InputAction m_aimAction;
 
+    public InputAction m_talkAction;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         m_sprintAction = InputSystem.actions.FindAction("Sprint");
         m_shootAction = InputSystem.actions.FindAction("Shoot");
         m_aimAction = InputSystem.actions.FindAction("Aim");
-
+        m_talkAction = InputSystem.actions.FindAction("Talk");
     }
 
     void OnDrawGizmosSelected()
@@ -370,6 +372,11 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection.magnitude >= 0.1f)
             return true;
         return false;
+    }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
     }
 
     private void ShootEvent()
