@@ -5,11 +5,15 @@ using DialogueEditor;
 public class NPCInteractble : MonoBehaviour
 {
     private GameObject player;
+    public GameObject combatManager;
+
     public NPCConversation conversation;
     private bool isTalking = false;
+    private bool wasTalking = false;
 
     [SerializeField] private float turnSpeed = 180f; // degrees per second
-    [SerializeField] private float facingThreshold = 2f; // degrees
+    [SerializeField] private float facingThreshold = 90f; // degrees
+    private bool challengeAccepted = false;
 
     void Start()
     {
@@ -27,7 +31,8 @@ public class NPCInteractble : MonoBehaviour
         else
         {
             isTalking = false;
-             player.GetComponent<PlayerMovement>().enabled = true;
+            if (!challengeAccepted)
+                player.GetComponent<PlayerMovement>().enabled = true;
         }
         
     }
@@ -82,9 +87,31 @@ public class NPCInteractble : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
-    public void SetIsTalking(bool bo)
+    public void AcceptChallenge()
     {
-        isTalking = bo;
+        challengeAccepted = true;
+    }
+    public void EndChallenge()
+    {
+        challengeAccepted = false;
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe to the end conversation event
+        ConversationManager.OnConversationEnded += MyEndEventMethod;
+    }
+
+    private void OnDisable()
+    {
+        // Always unsubscribe when the object is disabled/destroyed
+        ConversationManager.OnConversationEnded -= MyEndEventMethod;
+    }
+
+    private void MyEndEventMethod()
+    {
+        if (challengeAccepted)
+            combatManager.GetComponent<CombatManager>().StartCombat();
     }
 
 }

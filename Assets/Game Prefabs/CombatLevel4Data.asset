@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177cb079c148a41e98ec13767d89c052, type: 3}
+  m_Name: CombatLevel4Data
+  m_EditorClassIdentifier: 
+  waves:
+  - enemyPrefabs:
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    enemyCount: 2
+  - enemyPrefabs:
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    enemyCount: 3
+  - enemyPrefabs:
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    enemyCount: 4
+  - enemyPrefabs:
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    enemyCount: 5
+  - enemyPrefabs:
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    enemyCount: 1

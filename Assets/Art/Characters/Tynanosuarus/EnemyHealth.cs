@@ -33,6 +33,7 @@ public class EnemyHealth : MonoBehaviour
     public void Faint()
     {
         animator.Play("Death");
+        Destroy(this.gameObject, 3.0f);
     }
 
     public void SetInvulnerable(bool value)

@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b77786ddb02a4b67abe7f8283fbfb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: eb7fd7c307d4f4e6fb2f6bb35c7e1033, type: 2}
+  stats: {fileID: 11400000, guid: b2350cfcdc838445e88ecffbb68b9c79, type: 2}
   currentHealth: 0
   healthBar: {fileID: 8335024821414316905}
 --- !u!114 &702457867391659161

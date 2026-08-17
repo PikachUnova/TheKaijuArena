@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7873e2acdb762492e8e78f16e5c3d8e1, type: 3}
-  m_Name: DinoStats
+  m_Name: AnklosStats
   m_EditorClassIdentifier: 
-  maxHealth: 20
-  attackPower: 4
-  movementSpeed: 4
+  maxHealth: 30
+  attackPower: 10
+  movementSpeed: 3
