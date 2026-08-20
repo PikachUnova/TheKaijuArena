@@ -15,7 +15,8 @@ public class SceneLoader : MonoBehaviour
         {
             SceneManager.LoadScene("KaijuPlaza");
         }
-        //sceneData.sceneName
     }
+
+    
     
 }

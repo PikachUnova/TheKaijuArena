@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 100f;
     public CharacterStats stats;
     public float currentHealth;
 
-    // Player's starting point
-    public Vector3 savePoint = new Vector3(0.0f, 0.5f, 0.0f);
+    public Vector3 savePoint;
 
     private Animator animator;
 
@@ -30,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            UIHandler.handler.health = 0;
             Faint();
         }
     }
@@ -37,14 +36,36 @@ public class PlayerHealth : MonoBehaviour
     public void Faint()
     {
         animator.Play("Death");
-        StartCoroutine(Respawn(3f));
+        this.GetComponent<PlayerMovement>().canMove = false;
+        StartCoroutine(Respawn());
     }
 
-     private IEnumerator Respawn(float time)
+
+
+    private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(2f);
+        UIHandler.handler.FadeOut();
 
-        this.transform.position = savePoint;
+        yield return new WaitForSeconds(0.5f);
+
+        animator.SetTrigger("Revive");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SetPlayerTransformation(savePoint);
+
+        yield return new WaitForSeconds(1.2f);
+        UIHandler.handler.FadeIn();
+
+        currentHealth = stats.maxHealth;
+        UIHandler.handler.health = stats.maxHealth;
+        this.GetComponent<PlayerMovement>().canMove = true;
+
     }
+
+    public void SetPlayerTransformation(Vector3 point)
+    {
+        this.transform.position = point;
+    }
+
 
 }

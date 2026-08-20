@@ -98,7 +98,8 @@ public class CombatManager : MonoBehaviour
             return;
         }
         currentWave++;
-        StartCoroutine(DisplayText("Wave " + currentWave));
+        if (currentWave != 1)
+            StartCoroutine(DisplayText("Wave " + currentWave));
         enemySpawner.SpawnEnemies(combatLevelData.waves[currentWave - 1].enemyCount);
     }
 
@@ -130,6 +131,11 @@ public class CombatManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         SetPlayerLocation(npcPosition);
+        countDownText.text = "";
+        currentWave = 0;
+        hasStarted = false;
+        levelComplete = false;
+        this.enabled = false;
     }
 
 }

@@ -23,11 +23,13 @@ public class PlayerMovement : MonoBehaviour
     // States
     [SerializeField] private bool isGrounded = true;
     private bool isRunning = false;
+    public bool canMove = true;
 
     [Header("Ground Test")]    
     [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private float GroundedOffset = 0.25f;
     [SerializeField] private LayerMask groundLayer;
+
 
     [Header("Jumping Settings")]
     private float gravity = -9.81f;     // Gravity constant
@@ -44,9 +46,11 @@ public class PlayerMovement : MonoBehaviour
     private bool isAiming = false;
     private AudioSource audioSource;
 
+
     [Header("Animation + Rigging")]
     public Transform lookTarget;
     public Transform bone;
+
 
     [Header("Player Input")]
     public InputActionAsset inputActions;
@@ -80,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         m_shootAction = InputSystem.actions.FindAction("Shoot");
         m_aimAction = InputSystem.actions.FindAction("Aim");
         m_talkAction = InputSystem.actions.FindAction("Talk");
+
     }
 
     void OnDrawGizmosSelected()
@@ -92,6 +97,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() // Update is called once per frame
     {
+        if (!canMove)
+            return;
+
+
         if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
             animator.Play("Shoot");
         
