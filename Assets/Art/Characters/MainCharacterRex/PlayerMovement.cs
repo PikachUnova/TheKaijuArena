@@ -394,5 +394,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("NPC") && m_talkAction.IsPressed())
+        {
+            other.GetComponent<NPCInteractable>().Speak();
+        }
+    }
+
 }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using DialogueEditor;
 
-public class NPCInteractble : MonoBehaviour
+public class NPCInteractable : MonoBehaviour
 {
     private GameObject player;
     public GameObject combatManager;
@@ -13,7 +13,6 @@ public class NPCInteractble : MonoBehaviour
 
     [SerializeField] private float turnSpeed = 180f; // degrees per second
     [SerializeField] private float facingThreshold = 90f; // degrees
-    private bool challengeAccepted = false;
 
     void Start()
     {
@@ -23,36 +22,19 @@ public class NPCInteractble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ConversationManager.Instance.IsConversationActive)
+        if(isTalking)
         {
-            isTalking = true;
-            player.GetComponent<PlayerMovement>().enabled = false;
+            player.GetComponent<PlayerMovement>().SetLocomotive(0f);
         }
-        else
-        {
-            isTalking = false;
-            if (!challengeAccepted)
-                player.GetComponent<PlayerMovement>().enabled = true;
-        }
-        
     }
 
-    private void OnTriggerStay(Collider other)
+    public void Speak()
     {
-        if (other.CompareTag("Player") 
-        && other.GetComponent<PlayerMovement>().m_talkAction.WasPressedThisFrame()
-        && !isTalking
-        && other.GetComponent<PlayerMovement>().IsGrounded())
-        {
-            other.GetComponent<PlayerMovement>().SetLocomotive(0f);
-            StartCoroutine(Turn());
-
-            //if (!IsFacingPlayer() && isTalking)
-                //anim.SetFloat("Direction", 1f, 1f, Time.deltaTime);
-            //else
-                //anim.SetFloat("Direction", 0f, 1f, Time.deltaTime);
-        }
-            
+        if (isTalking)
+            return;
+        isTalking = true;
+        player.GetComponent<PlayerMovement>().enabled = false;
+        StartCoroutine(Turn());
     }
 
     IEnumerator Turn()
@@ -87,14 +69,6 @@ public class NPCInteractble : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
-    public void AcceptChallenge()
-    {
-        challengeAccepted = true;
-    }
-    public void EndChallenge()
-    {
-        challengeAccepted = false;
-    }
 
     private void OnEnable()
     {
@@ -110,8 +84,8 @@ public class NPCInteractble : MonoBehaviour
 
     private void MyEndEventMethod()
     {
-        if (challengeAccepted)
-            combatManager.GetComponent<CombatManager>().StartCombat();
+        isTalking = false;
+        player.GetComponent<PlayerMovement>().enabled = true;
     }
 
 }

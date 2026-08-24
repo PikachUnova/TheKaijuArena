@@ -1,24 +1,41 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using DialogueEditor;
 using UnityEngine.UI;
 using TMPro;
 
 public class CombatLevelSelector : MonoBehaviour
 {
-    [SerializeField] private CombatLevelData levelData;
-    [SerializeField] private Button button;
-    [SerializeField] private CombatManager combatManager;
+    public static CombatLevelSelector levelSelector;
 
-    public void SelectLevel()
+    [SerializeField] private CombatManager combatManager;
+    public NPCConversation conversation;
+
+    void Start()
     {
-        //combatManager.SetCombatLevel(levelData);
+        this.gameObject.SetActive(false);
+
+        if (CombatLevelSelector.levelSelector != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        levelSelector = this;
+        DontDestroyOnLoad(this);
     }
 
-    public bool IsLevelUnlocked(int level)
+    void Update()
     {
-        if (level == 1)
-            return true;
+        //if (ConversationManager.Instance.IsConversationActive)
+    }
 
-        return PlayerPrefs.GetInt("CombatLevel_" + level, 0) == 1;
+    public void SelectLevel(CombatLevelData data)
+    {
+        ConversationManager.Instance.StartConversation(conversation);
+        combatManager.SetCombatLevel(data);
+        combatManager.StartCombat();
+        this.gameObject.SetActive(false);
     }
 
     public void UnlockLevel(int level)
@@ -26,5 +43,6 @@ public class CombatLevelSelector : MonoBehaviour
         PlayerPrefs.SetInt("CombatLevel_" + level, 1);
         PlayerPrefs.Save();
     }
+
 
 }

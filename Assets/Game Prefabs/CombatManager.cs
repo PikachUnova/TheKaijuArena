@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using DialogueEditor;
 using TMPro;
 
 public class CombatManager : MonoBehaviour
@@ -8,7 +9,9 @@ public class CombatManager : MonoBehaviour
     [Header("References")]
     private GameObject player;
     [SerializeField] private EnemySpawner enemySpawner;
-    public TMP_Text countDownText;
+    public TMP_Text combatText;
+
+    public NPCConversation conversation;
 
 
     [Header("Position Points")]
@@ -17,7 +20,7 @@ public class CombatManager : MonoBehaviour
 
 
     [Header("Combat Level")]
-    [SerializeField] private CombatLevelData combatLevelData;
+    private CombatLevelData combatLevelData;
 
     private int level = 1;
 
@@ -37,14 +40,20 @@ public class CombatManager : MonoBehaviour
         StartCoroutine(StartCountDown()); // Start countdown
     }
 
+    public void SetCombatLevel(CombatLevelData data)
+    {
+        combatLevelData = data;
+    }
+
     void Update()
     {
-        if (!hasStarted)
+        if (!hasStarted) // Don't do anything if not started yet
             return;
+        
         if (IsLevelComplete())
         {
-            countDownText.text = "Level Cleared!";
-            countDownText.fontSize = 72;
+            combatText.text = "Level Cleared!";
+            combatText.fontSize = 72;
             StartCoroutine(EndCombat());
             return;
         }
@@ -68,26 +77,26 @@ public class CombatManager : MonoBehaviour
         SetPlayerLocation(startingPosition);
         player.GetComponent<PlayerMovement>().enabled = false;
         yield return new WaitForSeconds(2f);
-        countDownText.text = "3";
+        combatText.text = "3";
         yield return new WaitForSeconds(1f);
-        countDownText.text = "2";
+        combatText.text = "2";
         yield return new WaitForSeconds(1f);
-        countDownText.text = "1";
+        combatText.text = "1";
         yield return new WaitForSeconds(1f);
-        countDownText.text = "GO!";
+        combatText.text = "GO!";
         hasStarted = true;
         player.GetComponent<PlayerMovement>().enabled = true;
         StartNextWave();
         yield return new WaitForSeconds(1f);
-        countDownText.text = "";
+        combatText.text = "";
 
     }
 
     private IEnumerator DisplayText(string text)
     {
-        countDownText.text = text;
+        combatText.text = text;
         yield return new WaitForSeconds(2f);
-        countDownText.text = "";
+        combatText.text = "";
     }
 
     private void StartNextWave()
@@ -100,7 +109,7 @@ public class CombatManager : MonoBehaviour
         currentWave++;
         if (currentWave != 1)
             StartCoroutine(DisplayText("Wave " + currentWave));
-        enemySpawner.SpawnEnemies(combatLevelData.waves[currentWave - 1].enemyCount);
+        enemySpawner.SpawnEnemies(combatLevelData.waves[currentWave - 1].enemyPrefabs, combatLevelData.waves[currentWave - 1].enemyCount);
     }
 
     public void CheckWaveComplete()
@@ -129,13 +138,21 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator EndCombat()
     {
-        yield return new WaitForSeconds(3f);
-        SetPlayerLocation(npcPosition);
-        countDownText.text = "";
+        yield return new WaitForSeconds(2f);
+        UIHandler.handler.FadeOut();
+
+        combatText.text = "";
         currentWave = 0;
         hasStarted = false;
         levelComplete = false;
-        this.enabled = false;
+
+        yield return new WaitForSeconds(0.5f);
+        SetPlayerLocation(npcPosition);
+
+        yield return new WaitForSeconds(1.2f);
+        UIHandler.handler.FadeIn();
+        yield return new WaitForSeconds(0.5f);
+        ConversationManager.Instance.StartConversation(conversation);
     }
 
 }
