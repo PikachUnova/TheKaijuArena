@@ -11,8 +11,6 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private EnemySpawner enemySpawner;
     public TMP_Text combatText;
 
-    public NPCConversation conversation;
-
 
     [Header("Position Points")]
     public Transform startingPosition;
@@ -49,8 +47,16 @@ public class CombatManager : MonoBehaviour
     {
         if (!hasStarted) // Don't do anything if not started yet
             return;
-        
-        if (IsLevelComplete())
+            
+        if (player.GetComponent<PlayerHealth>().IsDefeated())
+        {
+            player.GetComponent<PlayerHealth>().Respawn();
+            combatText.text = "";
+            currentWave = 0;
+            hasStarted = false;
+            levelComplete = false;
+        }
+        else if (IsLevelComplete())
         {
             combatText.text = "Level Cleared!";
             combatText.fontSize = 72;
@@ -152,7 +158,9 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
         UIHandler.handler.FadeIn();
         yield return new WaitForSeconds(0.5f);
-        ConversationManager.Instance.StartConversation(conversation);
+
+        GameObject npc = GameObject.FindGameObjectWithTag("NPC");
+        npc.GetComponent<NPCInteractable>().StartCoversationWin();
     }
 
 }

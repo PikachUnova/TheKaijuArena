@@ -144,10 +144,9 @@ public class PteraAI : EnemyAI
         yield return new WaitForSeconds(0.1f);
 
         isDashing = true;
-
+        EnableAttackCollider();
         float elapsedTime = 0f;
-
-        while (elapsedTime < 1f)
+        while (elapsedTime < 1.5f)
         {
             transform.position += transform.forward * dashSpeed * Time.deltaTime;
 
@@ -156,6 +155,7 @@ public class PteraAI : EnemyAI
             yield return null;
         }
         isDashing = false;
+        DisableAttackCollider();
 
         // Return to flying height
         SetFlightHeight(flightHeight, 0.5f);

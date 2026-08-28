@@ -21,15 +21,21 @@ public class AnklyoAI : EnemyAI
 
     void Update()
     {
-        if (player == null || isBusy
-            || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+        if (isBusy)
             return;
 
+        if  (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+            currentState = EnemyState.Idle;
+        
+        
         if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
         {
-            this.enabled = false;
-            agent.velocity = Vector3.zero;
+            isBusy = true;
+            StopAllCoroutines();
+            currentState = EnemyState.Defeated;
             agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+            enabled = false;
         }
         
 
@@ -55,10 +61,6 @@ public class AnklyoAI : EnemyAI
                     StartCoroutine(RollAttackRoutine());
                 }
                 break;
-
-            case EnemyState.Retreat:
-                StartCoroutine(RetreatRoutine());
-                break;
         }
     }
 
@@ -74,7 +76,7 @@ public class AnklyoAI : EnemyAI
     private IEnumerator RollAttackRoutine()
     {
         isBusy = true;
-        currentState = EnemyState.Attack;
+        currentState = EnemyState.Dash;
 
         agent.isStopped = true;
         SetMovement(0f);
@@ -93,6 +95,7 @@ public class AnklyoAI : EnemyAI
             health.SetInvulnerable(true);
 
         animator.Play("Roll");
+        EnableAttackCollider();
 
         yield return new WaitForSeconds(1f);
 
@@ -108,6 +111,7 @@ public class AnklyoAI : EnemyAI
 
         isRolling = false;
         animator.SetTrigger("Cancel");
+        DisableAttackCollider();
 
         // Become vulnerable again
         if (health != null)
@@ -149,49 +153,27 @@ public class AnklyoAI : EnemyAI
         yield return new WaitForSeconds(attackDuration);
 
         // Decide what the enemy does next.
+        
         float decision = Random.value;
-        if (decision <= 0.5f)
+        if (decision <= 0.8f)
         {
-            currentState = EnemyState.Retreat;
-            agent.isStopped = false;
-            isBusy = false;
+            yield return StartCoroutine(BackJumpRoutine()); // Dodge backwards
         }
         else
         {
             agent.isStopped = true;
             SetMovement(0f);
+            currentState = EnemyState.Chase;
         }
-        isBusy = false;
-    }
-
-    private IEnumerator RetreatRoutine()
-    {
-        isBusy = true;
-        agent.isStopped = false;
-        agent.speed = movementSpeed;
-        SetMovement(0.5f);
-
-        while (player != null)
-        {
-            float distance = Vector3.Distance(transform.position, player.position);
-            if (distance >= rollRange / 2)
-                break;
-
-            Vector3 direction = transform.position - player.position;
-            direction.y = 0f;
-
-            if (direction.sqrMagnitude > 0.01f)
-            {
-                Vector3 retreatPosition = transform.position + direction.normalized * 2f;
-                agent.SetDestination(retreatPosition);
-            }
-            yield return null;
-        }
-
-        agent.isStopped = false;
+        
+        agent.isStopped = true;
+        SetMovement(0f);
         currentState = EnemyState.Chase;
+        
         isBusy = false;
     }
+
+
 
 }
 

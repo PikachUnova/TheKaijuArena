@@ -25,14 +25,17 @@ public class CombatLevelSelector : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    void Update()
-    {
-        //if (ConversationManager.Instance.IsConversationActive)
-    }
-
     public void SelectLevel(CombatLevelData data)
     {
+        StartCoroutine(StartLevel(data));
+    }
+
+    private IEnumerator StartLevel(CombatLevelData data)
+    {
         ConversationManager.Instance.StartConversation(conversation);
+        yield return new WaitForSeconds(2f);
+        ConversationManager.Instance.EndConversation();
+
         combatManager.SetCombatLevel(data);
         combatManager.StartCombat();
         this.gameObject.SetActive(false);

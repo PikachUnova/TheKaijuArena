@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isInvulnerable) return;
+        if (isInvulnerable || currentHealth <= 0) return;
 
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);

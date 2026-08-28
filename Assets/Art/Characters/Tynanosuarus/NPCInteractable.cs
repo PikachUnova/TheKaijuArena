@@ -6,8 +6,12 @@ public class NPCInteractable : MonoBehaviour
 {
     private GameObject player;
     public GameObject combatManager;
+    public GameObject levelSelect;
 
     public NPCConversation conversation;
+    public NPCConversation conversationWin;
+    public NPCConversation conversationLoss;
+
     private bool isTalking = false;
     private bool wasTalking = false;
 
@@ -23,14 +27,12 @@ public class NPCInteractable : MonoBehaviour
     void Update()
     {
         if(isTalking)
-        {
             player.GetComponent<PlayerMovement>().SetLocomotive(0f);
-        }
     }
 
     public void Speak()
     {
-        if (isTalking)
+        if (isTalking || ConversationManager.Instance.IsConversationActive)
             return;
         isTalking = true;
         player.GetComponent<PlayerMovement>().enabled = false;
@@ -69,6 +71,14 @@ public class NPCInteractable : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
+    public void StartCoversationWin()
+    {
+        ConversationManager.Instance.StartConversation(conversationWin);
+    }
+    public void StartCoversationLoss()
+    {
+        ConversationManager.Instance.StartConversation(conversationLoss);
+    }
 
     private void OnEnable()
     {
@@ -84,8 +94,11 @@ public class NPCInteractable : MonoBehaviour
 
     private void MyEndEventMethod()
     {
-        isTalking = false;
-        player.GetComponent<PlayerMovement>().enabled = true;
+        if (!levelSelect.activeSelf)
+        {
+            isTalking = false;
+            player.GetComponent<PlayerMovement>().enabled = true;
+        }
     }
 
 }

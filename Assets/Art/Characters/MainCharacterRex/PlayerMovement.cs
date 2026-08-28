@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement playerMovement;
     public PlayerShooter shotMuzzle;
     private Animator animator;
-    private CharacterController controller; // Component to control the character
+    private CharacterController controller;
 
     [Header("Movement")]
     private float moveSpeed = 0f;
@@ -44,13 +45,14 @@ public class PlayerMovement : MonoBehaviour
     public CinemachineCamera freeLookCamera;  // Reference to the FreeLook Camera
     public CinemachineCamera TPCamera;  // Reference to the Virtual Camera
     private bool isAiming = false;
-    private AudioSource audioSource;
 
-
-    [Header("Animation + Rigging")]
+    [Header("Aiming")]
+    public MultiAimConstraint aimConstraint;
     public Transform lookTarget;
-    public Transform bone;
 
+    [Header("Dodging")]
+    [SerializeField] private float dodgeDistance = 6f;
+    [SerializeField] private float dodgeDuration = 1f;
 
     [Header("Player Input")]
     public InputActionAsset inputActions;
@@ -58,8 +60,10 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_sprintAction;
     private InputAction m_shootAction;
     private InputAction m_aimAction;
+    private InputAction m_talkAction;
+    private InputAction m_dodgeAction;
 
-    public InputAction m_talkAction;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         m_shootAction = InputSystem.actions.FindAction("Shoot");
         m_aimAction = InputSystem.actions.FindAction("Aim");
         m_talkAction = InputSystem.actions.FindAction("Talk");
+        m_dodgeAction = InputSystem.actions.FindAction("Dodge");
 
     }
 
@@ -129,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         AnimatePlayerMotion();
         Move();
         Jump(); 
+        Dodge();
         Fall(); 
         Land();
 
@@ -254,9 +260,53 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void Dodge()
+    {
+        if(!isGrounded) return;
+
+        if (m_dodgeAction.WasPressedThisFrame())
+        {
+            animator.Play("Dodge");
+            StartCoroutine(Dodge(-transform.forward)); // back
+        }
+
+        if (IsMoving())
+        {
+            if (m_dodgeAction.WasPressedThisFrame() && Input.GetAxisRaw("Horizontal") < 0)
+            {
+                StartCoroutine(Dodge(-transform.right)); // Left
+                animator.Play("Dodge");
+            }
+            if (m_dodgeAction.WasPressedThisFrame()  && Input.GetAxisRaw("Horizontal") > 0)
+            {
+                StartCoroutine(Dodge(transform.right)); // Right
+                animator.Play("Dodge");
+            }
+        }
+
+    }
+
+    private IEnumerator Dodge(Vector3 direction)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = startPosition + direction * dodgeDistance;
+
+        while (elapsedTime < dodgeDuration)
+        {
+            float t = elapsedTime / dodgeDuration;
+            Vector3 nextPosition = Vector3.Lerp(startPosition, targetPosition, elapsedTime / dodgeDuration);
+            nextPosition.y += Mathf.Sin(t * Mathf.PI) * (jumpHeight/4f);
+            controller.Move(nextPosition - transform.position);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        controller.Move(targetPosition - transform.position);
+        animator.Play("Land");
+    }
+
     private void AnimatePlayerMotion()
     {
-
         if (!isGrounded) return;
 
         if (!IsMoving())
@@ -327,7 +377,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator SmoothlyResetLookTargetPosition()
     {
         Vector3 initialPosition = lookTarget.transform.localPosition;
-        Vector3 targetPosition = new Vector3(0f, 1f, 3f);
+        Vector3 targetPosition = new Vector3(0f, 0.35f, 5f);
         float duration = 0.5f;
         float timeElapsed = 0f;
 
@@ -358,11 +408,9 @@ public class PlayerMovement : MonoBehaviour
         cameraForward.y = 0;
         cameraRight.y = 0;
 
-        // Normalize the direction vectors
         cameraForward.Normalize();
         cameraRight.Normalize();
 
-        // Calculate the movement direction based on camera orientation
         moveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
 
         if (IsMoving())
@@ -401,6 +449,22 @@ public class PlayerMovement : MonoBehaviour
             other.GetComponent<NPCInteractable>().Speak();
         }
     }
+
+    public void SetWeight()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Defeated"))
+        {
+            var data = aimConstraint.data;
+            WeightedTransformArray sources = data.sourceObjects;
+
+            var firstSource = sources.GetTransform(0);
+            sources.SetWeight(0, 0.0f); // Set weight
+
+            data.sourceObjects = sources;
+            aimConstraint.data = data;
+        }
+    }
+
 
 }
 

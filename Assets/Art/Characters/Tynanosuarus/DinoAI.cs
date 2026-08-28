@@ -20,16 +20,24 @@ public class DinoAI : EnemyAI
     void Update()
     {
 
-        if (player == null || isBusy ||
-           player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+        if (isBusy)
             return;
+
+        if  (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+            currentState = EnemyState.Idle;
+        
         
         if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
         {
-            this.enabled = false;
-            agent.velocity = Vector3.zero;
+            isBusy = true;
+            StopAllCoroutines();
+            currentState = EnemyState.Defeated;
             agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+            enabled = false;
         }
+
+
 
         float distance = Vector3.Distance(transform.position, player.position);
         switch (currentState)
@@ -88,15 +96,13 @@ public class DinoAI : EnemyAI
         }
 
         animator.Play("Attack");
-
         yield return new WaitForSeconds(attackDuration);
 
         // Decide what the enemy does next.
         float decision = Random.value;
-        if (decision <= 0.5f)
+        if (decision <= 0.8f)
         {
-            agent.isStopped = true;
-            currentState = EnemyState.Chase;
+            yield return StartCoroutine(BackJumpRoutine()); // Dodge backwards
         }
         else
         {
@@ -115,20 +121,15 @@ public class DinoAI : EnemyAI
         agent.isStopped = true;
         SetMovement(0f);
 
-        // Face the player
-        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.LookAt(targetPosition);
-        animator.Play("Shoot");
-        yield return new WaitForSeconds(aimDuration);
-
-        targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.LookAt(targetPosition);
-        animator.Play("Shoot");
-        yield return new WaitForSeconds(aimDuration);
-
-        targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
-        transform.LookAt(targetPosition);
-        animator.Play("Shoot");
+        // Aim at the player
+        Vector3 targetPosition;
+        for (int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(aimDuration);
+            targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
+            transform.LookAt(targetPosition);
+            animator.Play("Shoot");
+        }
 
         // Chase again
         currentState = EnemyState.Chase;

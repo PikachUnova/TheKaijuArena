@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DialogueEditor;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
@@ -12,7 +13,6 @@ public class PlayerHealth : MonoBehaviour
 
     private Animator animator;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentHealth = stats.maxHealth;
@@ -21,6 +21,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (currentHealth <= 0)
+            return;
+
         UIHandler.handler.health -= damage;
         currentHealth -= damage;
         animator.Play("Hurt");
@@ -33,16 +36,18 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Faint()
+    private void Faint()
     {
         animator.Play("Death");
         this.GetComponent<PlayerMovement>().canMove = false;
-        StartCoroutine(Respawn());
     }
 
+    public void Respawn()
+    {
+        StartCoroutine(RespawnTime());
+    }
 
-
-    private IEnumerator Respawn()
+    private IEnumerator RespawnTime()
     {
         yield return new WaitForSeconds(2f);
         UIHandler.handler.FadeOut();
@@ -58,8 +63,9 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth = stats.maxHealth;
         UIHandler.handler.health = stats.maxHealth;
-        this.GetComponent<PlayerMovement>().canMove = true;
 
+        GameObject npc = GameObject.FindGameObjectWithTag("NPC");
+        npc.GetComponent<NPCInteractable>().StartCoversationLoss();
     }
 
     public void SetPlayerTransformation(Vector3 point)
@@ -67,5 +73,10 @@ public class PlayerHealth : MonoBehaviour
         this.transform.position = point;
     }
 
+    public bool IsDefeated()
+    {
+        if (currentHealth <= 0) return true;
+        return false;
+    }
 
 }
