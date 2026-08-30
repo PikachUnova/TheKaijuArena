@@ -26,5 +26,6 @@ MonoBehaviour:
     - {fileID: 3650390316124551110, guid: 38b94608e6cda43859ccaa107a57d42f, type: 3}
     enemyCount: 5
   - enemyPrefabs:
-    - {fileID: 3650390316124551110, guid: 38b94608e6cda43859ccaa107a57d42f, type: 3}
+    - {fileID: 1414428762019561109, guid: 8975452e4c92941e49f077e5c4ecc1c4, type: 3}
     enemyCount: 1
+  level: 2

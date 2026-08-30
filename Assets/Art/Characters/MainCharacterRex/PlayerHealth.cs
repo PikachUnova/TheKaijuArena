@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DialogueEditor;
-using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -39,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
     private void Faint()
     {
         animator.Play("Death");
-        this.GetComponent<PlayerMovement>().canMove = false;
+        this.GetComponent<PlayerMovement>().enabled = false;
     }
 
     public void Respawn()
@@ -55,10 +53,9 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         animator.SetTrigger("Revive");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         SetPlayerTransformation(savePoint);
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();
 
         currentHealth = stats.maxHealth;

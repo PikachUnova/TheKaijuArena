@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &525017726041387603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6652144919914991229}
+  - component: {fileID: 3392029728272051915}
+  - component: {fileID: 4064539007522412007}
+  m_Layer: 0
+  m_Name: AttackTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6652144919914991229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525017726041387603}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 352078482390582372}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &3392029728272051915
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525017726041387603}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4064539007522412007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525017726041387603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee763c6d9a42a4a9e986d4671f3a1d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 71bf2bb8f5ed94e418f79f324f6d87f2, type: 2}
+  knockbackForce: 20
 --- !u!1001 &245566021447869327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22,15 +90,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.17
+      value: -0.6545069
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.18
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.7
+      value: 92.51178
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       propertyPath: m_LocalRotation.w
@@ -78,6 +146,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4875634711660904823}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6652144919914991229}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       insertIndex: -1
@@ -184,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b77786ddb02a4b67abe7f8283fbfb99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: eb7fd7c307d4f4e6fb2f6bb35c7e1033, type: 2}
+  stats: {fileID: 11400000, guid: 71bf2bb8f5ed94e418f79f324f6d87f2, type: 2}
   currentHealth: 0
   healthBar: {fileID: 6364978699500298272}
 --- !u!114 &5258511985579051862
@@ -203,12 +274,16 @@ MonoBehaviour:
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
   fire: {fileID: 0}
+  attackTrigger: {fileID: 3392029728272051915}
   detectionRange: 30
   attackRange: 3
   rangedAttackRange: 0
   movementSpeed: 4
   rotationSpeed: 360
   attackDuration: 1
+  backJumpDistance: 6
+  backJumpHeight: 1.5
+  backJumpDuration: 0.5
   rollRange: 20
   rollSpeed: 20
   rollDuration: 2

@@ -102,9 +102,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() // Update is called once per frame
     {
-        if (!canMove)
-            return;
-
 
         if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
             animator.Play("Shoot");

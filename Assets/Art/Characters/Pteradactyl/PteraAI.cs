@@ -5,7 +5,6 @@ using System.Collections;
 public class PteraAI : EnemyAI
 {
     [Header("Flight")]
-    [SerializeField] private float takeOffDelay = 2f;
     [SerializeField] private float flightHeight = 3f;
     [SerializeField] private float flightSpeed = 5f;
 
@@ -19,7 +18,6 @@ public class PteraAI : EnemyAI
     [SerializeField] private float dashHeight = 1.5f;
     [SerializeField] private float dashCooldown = 5f;
     private float dashTimer;
-    private bool isDashing;
 
     private bool isFlying = false;
 
@@ -32,15 +30,20 @@ public class PteraAI : EnemyAI
     // Update is called once per frame
     void Update()
     {
-        if (player == null || isBusy || !isFlying 
-            || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+        if (isBusy || !isFlying)
             return;
+        
+        if  (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+            currentState = EnemyState.Idle;
         
         if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
         {
-            this.enabled = false;
-            agent.velocity = Vector3.zero;
+            currentState = EnemyState.Defeated;
+            isBusy = true;
+            StopAllCoroutines();
             agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+            enabled = false;
         }
         
 
@@ -143,7 +146,6 @@ public class PteraAI : EnemyAI
 
         yield return new WaitForSeconds(0.1f);
 
-        isDashing = true;
         EnableAttackCollider();
         float elapsedTime = 0f;
         while (elapsedTime < 1.5f)
@@ -154,7 +156,6 @@ public class PteraAI : EnemyAI
 
             yield return null;
         }
-        isDashing = false;
         DisableAttackCollider();
 
         // Return to flying height

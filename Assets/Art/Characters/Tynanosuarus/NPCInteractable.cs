@@ -6,15 +6,12 @@ public class NPCInteractable : MonoBehaviour
 {
     private GameObject player;
     public GameObject combatManager;
-    public GameObject levelSelect;
 
     public NPCConversation conversation;
     public NPCConversation conversationWin;
     public NPCConversation conversationLoss;
 
     private bool isTalking = false;
-    private bool wasTalking = false;
-
     [SerializeField] private float turnSpeed = 180f; // degrees per second
     [SerializeField] private float facingThreshold = 90f; // degrees
 
@@ -94,11 +91,16 @@ public class NPCInteractable : MonoBehaviour
 
     private void MyEndEventMethod()
     {
-        if (!levelSelect.activeSelf)
+        if (!CombatLevelSelector.levelSelector.gameObject.activeSelf)
         {
             isTalking = false;
             player.GetComponent<PlayerMovement>().enabled = true;
-        }
+        }/*
+        else
+        {
+            CombatLevelSelector.levelSelector.gameObject.SetActive(true);
+            Debug.Log("Your conversation has ended!");
+        }*/
     }
 
 }

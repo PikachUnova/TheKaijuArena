@@ -111,6 +111,11 @@ public class EnemyAI : MonoBehaviour
         agent.isStopped = false;
     }
 
+    public int GetAttackPower()
+    {
+        return attackPower;
+    }
+
     public void EnableAttackCollider()
     {
         //Debug.Log("E");

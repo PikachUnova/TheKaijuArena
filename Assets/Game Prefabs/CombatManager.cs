@@ -7,6 +7,7 @@ using TMPro;
 public class CombatManager : MonoBehaviour
 {
     [Header("References")]
+    public static CombatManager combatManager;
     private GameObject player;
     [SerializeField] private EnemySpawner enemySpawner;
     public TMP_Text combatText;
@@ -20,8 +21,6 @@ public class CombatManager : MonoBehaviour
     [Header("Combat Level")]
     private CombatLevelData combatLevelData;
 
-    private int level = 1;
-
     private int currentWave = 0;
 
     private bool hasStarted = false;
@@ -31,6 +30,13 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        if (CombatManager.combatManager != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        combatManager = this;
+        DontDestroyOnLoad(this);
     }
 
     public void StartCombat()
@@ -51,13 +57,17 @@ public class CombatManager : MonoBehaviour
         if (player.GetComponent<PlayerHealth>().IsDefeated())
         {
             player.GetComponent<PlayerHealth>().Respawn();
-            combatText.text = "";
             currentWave = 0;
             hasStarted = false;
             levelComplete = false;
+            combatText.text = "";
+            enemySpawner.ClearEnemies();
         }
         else if (IsLevelComplete())
         {
+            currentWave = 0;
+            hasStarted = false;
+            levelComplete = false;
             combatText.text = "Level Cleared!";
             combatText.fontSize = 72;
             StartCoroutine(EndCombat());
@@ -122,7 +132,6 @@ public class CombatManager : MonoBehaviour
     {
         if (enemySpawner.GetAliveEnemyCount() <= 0)
         {
-            StartCoroutine(DisplayText("Wave " + currentWave + " Complete!"));
             StartNextWave();
         }
     }
@@ -144,18 +153,16 @@ public class CombatManager : MonoBehaviour
 
     private IEnumerator EndCombat()
     {
+        if (combatLevelData.level >= CombatLevelSelector.levelSelector.GetCurrentLevel()) // Do not unlock if already done
+            CombatLevelSelector.levelSelector.UnlockLevel();
+        else
+            Debug.Log("Level already done.");
         yield return new WaitForSeconds(2f);
-        UIHandler.handler.FadeOut();
-
         combatText.text = "";
-        currentWave = 0;
-        hasStarted = false;
-        levelComplete = false;
-
-        yield return new WaitForSeconds(0.5f);
+        UIHandler.handler.FadeOut();
+        yield return new WaitForSeconds(0.7f);
         SetPlayerLocation(npcPosition);
-
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();
         yield return new WaitForSeconds(0.5f);
 

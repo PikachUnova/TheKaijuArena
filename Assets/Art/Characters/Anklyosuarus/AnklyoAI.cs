@@ -5,7 +5,6 @@ using System.Collections;
 public class AnklyoAI : EnemyAI
 {
 
-    private bool isRolling;
     [SerializeField] private float rollRange;
     [SerializeField] private float rollSpeed;
     [SerializeField] private float rollDuration = 2f;
@@ -99,8 +98,6 @@ public class AnklyoAI : EnemyAI
 
         yield return new WaitForSeconds(1f);
 
-        isRolling = true;
-
         float elapsedTime = 0f;
         while (elapsedTime < rollDuration)
         {
@@ -109,7 +106,6 @@ public class AnklyoAI : EnemyAI
             yield return null;
         }
 
-        isRolling = false;
         animator.SetTrigger("Cancel");
         DisableAttackCollider();
 

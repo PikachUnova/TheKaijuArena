@@ -66,6 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee763c6d9a42a4a9e986d4671f3a1d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: eb7fd7c307d4f4e6fb2f6bb35c7e1033, type: 2}
+  knockbackForce: 2
 --- !u!1 &8585139974036630356
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f484c62f6477142bb9d14bdb4fc1a4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 5
+  attackPower: 4
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 8148204454145412617}
   fire: {fileID: 8053896815298010388, guid: 5b8451db9af32423bb6b9cf08743112d, type: 3}
@@ -368,11 +370,11 @@ MonoBehaviour:
   movementSpeed: 4
   rotationSpeed: 360
   attackDuration: 1
-  shootCooldown: 2
-  aimDuration: 0.5
   backJumpDistance: 6
   backJumpHeight: 1.5
   backJumpDuration: 0.5
+  shootCooldown: 2
+  aimDuration: 0.5
 --- !u!4 &4171206312250666364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b6e604344875847729e195251706ff56, type: 3}

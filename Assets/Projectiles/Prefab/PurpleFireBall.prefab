@@ -159,9 +159,9 @@ GameObject:
   - component: {fileID: 1247932695313397647}
   - component: {fileID: 320678811838538976}
   - component: {fileID: 5372922328967659987}
-  - component: {fileID: 737296545177903686}
   - component: {fileID: 5158951922801046126}
   - component: {fileID: -4928427789507664131}
+  - component: {fileID: -6502518064852267544}
   m_Layer: 0
   m_Name: PurpleFireBall
   m_TagString: Untagged
@@ -5044,24 +5044,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &737296545177903686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3767986700269957175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3667cd8ff47eb47f8ab7427c1166a02a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 16
-  attackPower: 10
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  impact: {fileID: 4226508779205603589, guid: deb7a2f6890544f0a9e8cb1ddf7b93dc, type: 3}
 --- !u!135 &5158951922801046126
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5110,6 +5092,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6502518064852267544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3767986700269957175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05915a16d37d5452989393f3713ae989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 16
+  attackPower: 8
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  impact: {fileID: 4226508779205603589, guid: deb7a2f6890544f0a9e8cb1ddf7b93dc, type: 3}
 --- !u!1 &3878317448087852433
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,8 +9,12 @@ public class CombatLevelSelector : MonoBehaviour
 {
     public static CombatLevelSelector levelSelector;
 
-    [SerializeField] private CombatManager combatManager;
     public NPCConversation conversation;
+
+    private int currentLevel = 0;
+
+    public Button[] buttons;
+
 
     void Start()
     {
@@ -23,6 +27,10 @@ public class CombatLevelSelector : MonoBehaviour
         }
         levelSelector = this;
         DontDestroyOnLoad(this);
+
+        for (int i = 0; i < buttons.Length; i++)
+            buttons[i].interactable = false;
+        UnlockLevel();
     }
 
     public void SelectLevel(CombatLevelData data)
@@ -36,15 +44,21 @@ public class CombatLevelSelector : MonoBehaviour
         yield return new WaitForSeconds(2f);
         ConversationManager.Instance.EndConversation();
 
-        combatManager.SetCombatLevel(data);
-        combatManager.StartCombat();
+        CombatManager.combatManager.SetCombatLevel(data);
+        CombatManager.combatManager.StartCombat();
         this.gameObject.SetActive(false);
     }
 
-    public void UnlockLevel(int level)
+    public void UnlockLevel()
     {
-        PlayerPrefs.SetInt("CombatLevel_" + level, 1);
-        PlayerPrefs.Save();
+        currentLevel++;
+        Debug.Log("Unlocked Level " + currentLevel);
+        buttons[(currentLevel - 1) % buttons.Length].interactable = true;
+    }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
     }
 
 

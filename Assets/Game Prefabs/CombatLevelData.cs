@@ -12,4 +12,5 @@ public class CombatLevelData : ScriptableObject
     }
 
     public WaveData[] waves;
+    public int level;
 }

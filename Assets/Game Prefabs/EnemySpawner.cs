@@ -21,5 +21,20 @@ public class EnemySpawner : MonoBehaviour
         return GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
 
+    public void ClearEnemies()
+    {
+        StartCoroutine(Clear());
+    }
+
+    private IEnumerator Clear()
+    {
+        yield return new WaitForSeconds(2.5f);
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+    }
     
 }
