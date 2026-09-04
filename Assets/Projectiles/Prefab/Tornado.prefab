@@ -4871,6 +4871,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   impact: {fileID: 0}
+  soundClips:
+  - {fileID: 8300000, guid: e6a7ba79645be4a499a167aacfa76c2d, type: 3}
+  - {fileID: 8300000, guid: 98624efaf3ec14e5a81bf7ef0423db13, type: 3}
   initialDirection: {x: 0, y: -1, z: 0}
   initialSpeed: 3
   phase1Duration: 0.5

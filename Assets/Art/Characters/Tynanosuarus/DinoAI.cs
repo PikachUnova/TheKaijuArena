@@ -142,6 +142,7 @@ public class DinoAI : EnemyAI
         // Spawn projectile
         if (fire != null && projectileSpawnPoint != null)
         {
+            AudioManager.audioManager.PlaySFX(0, this.gameObject);
             GameObject projectile = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
         }
     }

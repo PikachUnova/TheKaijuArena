@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class BasePlayerProjectile : MonoBehaviour
 {
-    [SerializeField] protected float speed = 20;
+    [SerializeField] protected float speed = 16f;
     [SerializeField] protected int attackPower = 8;
 
     [SerializeField] protected LayerMask layerMask;
     [SerializeField] protected GameObject impact;
+
 
     // Start is called before the first frame update
     protected void Start()
@@ -21,12 +22,16 @@ public class BasePlayerProjectile : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy")) // Damage Enemy
         {
             other.GetComponent<EnemyHealth>().TakeDamage(attackPower);
-            Instantiate(impact, transform.position, transform.rotation);
+            if (impact != null)
+                Instantiate(impact, transform.position, transform.rotation);
+            AudioManager.audioManager.PlaySFX(2, this.gameObject);
             Destroy(this.gameObject);
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("Grass"))
-        {
-            Instantiate(impact, transform.position, transform.rotation);
+        {   
+            if (impact != null)
+                Instantiate(impact, transform.position, transform.rotation);
+            AudioManager.audioManager.PlaySFX(2, this.gameObject);
             Destroy(this.gameObject);
         }
     }

@@ -572,6 +572,8 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 5640194648974995569}
   fire: {fileID: 8053896815298010388, guid: 5b8451db9af32423bb6b9cf08743112d, type: 3}
   attackTrigger: {fileID: 2779776049007974266}
+  soundClips:
+  - {fileID: 8300000, guid: e6a7ba79645be4a499a167aacfa76c2d, type: 3}
   detectionRange: 20
   attackRange: 2
   rangedAttackRange: 4

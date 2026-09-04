@@ -27,12 +27,14 @@ public class BaseEnemyProjectile : MonoBehaviour
             other.GetComponent<PlayerHealth>().TakeDamage(attackPower);
             if (impact != null)
                 Instantiate(impact, transform.position, transform.rotation);
+            AudioManager.audioManager.PlaySFX(2, this.gameObject);
             Destroy(this.gameObject);
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("Grass"))
         {
             if (impact != null)
                 Instantiate(impact, transform.position, transform.rotation);
+            AudioManager.audioManager.PlaySFX(2, this.gameObject);
             Destroy(this.gameObject);
         }
     }

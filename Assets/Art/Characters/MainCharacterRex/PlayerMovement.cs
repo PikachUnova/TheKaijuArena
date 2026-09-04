@@ -62,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_aimAction;
     private InputAction m_talkAction;
     private InputAction m_dodgeAction;
+    private InputAction m_attackAction;
 
-    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetFloat("MovementSpeed", 0f);
 
-        audioSource = GetComponent<AudioSource>();
         TPCamera.gameObject.SetActive(false);
         
         m_jumpAction = InputSystem.actions.FindAction("Jump");
@@ -89,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         m_aimAction = InputSystem.actions.FindAction("Aim");
         m_talkAction = InputSystem.actions.FindAction("Talk");
         m_dodgeAction = InputSystem.actions.FindAction("Dodge");
+        m_attackAction= InputSystem.actions.FindAction("Attack");
 
     }
 
@@ -105,6 +105,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
             animator.Play("Shoot");
+        else if (m_attackAction.WasPressedThisFrame()) // Melee Attack
+            animator.Play("Attack");
+
         
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
@@ -435,6 +438,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ShootEvent()
     {
+        AudioManager.audioManager.PlaySFX(0, this.gameObject);
         shotMuzzle.Shoot();
     }
 
@@ -462,6 +466,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void EnableAttackCollider()
+    {
+        AudioManager.audioManager.PlaySFX(3, this.gameObject);
+        //attackTrigger.GetComponent<Collider>().enabled = true;
+    }
+
+    public void DisableAttackCollider()
+    {
+        //Debug.Log("Player Disable Collider");
+        //attackTrigger.GetComponent<Collider>().enabled = false;
+    }
 
 }
 

@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected GameObject fire;
     [SerializeField] protected Collider attackTrigger;
 
-    protected UnityEngine.AI.NavMeshAgent agent;
+    protected NavMeshAgent agent;
     protected Animator animator;
     
     [Header("Movement")]
@@ -118,13 +118,12 @@ public class EnemyAI : MonoBehaviour
 
     public void EnableAttackCollider()
     {
-        //Debug.Log("E");
+        AudioManager.audioManager.PlaySFX(2, this.gameObject);
         attackTrigger.GetComponent<Collider>().enabled = true;
     }
 
     public void DisableAttackCollider()
     {
-        //Debug.Log("D");
         attackTrigger.GetComponent<Collider>().enabled = false;
     }
 

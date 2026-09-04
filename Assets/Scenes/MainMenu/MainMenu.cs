@@ -3,7 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    
+    private AudioSource audioSource;
+
+    public AudioClip[] menuClips;
+
+    public AudioClip menuSoundtrack;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(menuSoundtrack);
+    }
 
     public void Play()
     {

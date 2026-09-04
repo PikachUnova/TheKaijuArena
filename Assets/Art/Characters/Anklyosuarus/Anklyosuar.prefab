@@ -275,6 +275,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 0}
   fire: {fileID: 0}
   attackTrigger: {fileID: 3392029728272051915}
+  soundClips: []
   detectionRange: 30
   attackRange: 3
   rangedAttackRange: 0
