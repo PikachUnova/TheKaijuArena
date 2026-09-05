@@ -92,19 +92,25 @@ public class CombatManager : MonoBehaviour
     {
         SetPlayerLocation(startingPosition);
         player.GetComponent<PlayerMovement>().enabled = false;
+        AudioManager.audioManager.StopMusic();
         yield return new WaitForSeconds(2f);
+        AudioManager.audioManager.PlaySFX(4);
         combatText.text = "3";
         yield return new WaitForSeconds(1f);
+        AudioManager.audioManager.PlaySFX(4);
         combatText.text = "2";
         yield return new WaitForSeconds(1f);
+        AudioManager.audioManager.PlaySFX(4);
         combatText.text = "1";
         yield return new WaitForSeconds(1f);
+        AudioManager.audioManager.PlaySFX(4);
         combatText.text = "GO!";
         hasStarted = true;
         player.GetComponent<PlayerMovement>().enabled = true;
         StartNextWave();
         yield return new WaitForSeconds(1f);
         combatText.text = "";
+        AudioManager.audioManager.PlayTrack(2);
 
     }
 
@@ -155,8 +161,10 @@ public class CombatManager : MonoBehaviour
     {
         if (combatLevelData.level >= CombatLevelSelector.levelSelector.GetCurrentLevel()) // Do not unlock if already done
             CombatLevelSelector.levelSelector.UnlockLevel();
-        else
-            Debug.Log("Level already done.");
+        
+        AudioManager.audioManager.StopMusic();
+        AudioManager.audioManager.PlaySFX(5);
+
         yield return new WaitForSeconds(2f);
         combatText.text = "";
         UIHandler.handler.FadeOut();
@@ -165,6 +173,8 @@ public class CombatManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();
         yield return new WaitForSeconds(0.5f);
+
+        AudioManager.audioManager.PlayTrack(1);
 
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");
         npc.GetComponent<NPCInteractable>().StartCoversationWin();

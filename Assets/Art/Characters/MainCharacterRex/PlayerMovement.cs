@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerShooter shotMuzzle;
     private Animator animator;
     private CharacterController controller;
+    public GameObject attackTrigger;
 
     [Header("Movement")]
     private float moveSpeed = 0f;
@@ -105,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
             animator.Play("Shoot");
-        else if (m_attackAction.WasPressedThisFrame()) // Melee Attack
+        else if (m_attackAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // Melee Attack
             animator.Play("Attack");
 
         
@@ -438,10 +439,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void ShootEvent()
     {
-        AudioManager.audioManager.PlaySFX(0, this.gameObject);
+        AudioManager.audioManager.PlaySFX(0);
         shotMuzzle.Shoot();
     }
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -465,17 +465,27 @@ public class PlayerMovement : MonoBehaviour
             aimConstraint.data = data;
         }
     }
+/*
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.GetComponent<EnemyHealth>().TakeDamage(5);
+        }
+        
+    }*/
 
     public void EnableAttackCollider()
     {
-        AudioManager.audioManager.PlaySFX(3, this.gameObject);
-        //attackTrigger.GetComponent<Collider>().enabled = true;
+        //Debug.Log("Player Enable Collider");
+        AudioManager.audioManager.PlaySFX(3);
+        attackTrigger.GetComponent<Collider>().enabled = true;
     }
 
     public void DisableAttackCollider()
     {
         //Debug.Log("Player Disable Collider");
-        //attackTrigger.GetComponent<Collider>().enabled = false;
+        attackTrigger.GetComponent<Collider>().enabled = false;
     }
 
 }

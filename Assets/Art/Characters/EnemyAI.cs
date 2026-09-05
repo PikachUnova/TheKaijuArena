@@ -118,7 +118,7 @@ public class EnemyAI : MonoBehaviour
 
     public void EnableAttackCollider()
     {
-        AudioManager.audioManager.PlaySFX(2, this.gameObject);
+        AudioManager.audioManager.PlaySFX(3);
         attackTrigger.GetComponent<Collider>().enabled = true;
     }
 
