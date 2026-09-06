@@ -24,8 +24,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(int index)
     {
-        soundAudioSource.PlayOneShot(audioClips[index]); // Loudness just right but sound far from listener should be more silent.
-        //AudioSource.PlayClipAtPoint(audioClips[index], other.transform.position, 1f); // Does attentuation but too soft
+        soundAudioSource.PlayOneShot(audioClips[index % audioClips.Length]); 
     }
 
     public void PlayTrack(int index)

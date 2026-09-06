@@ -12,7 +12,8 @@ public class EnemyAI : MonoBehaviour
         Shoot,
         Retreat,
         Dash,
-        Defeated
+        Defeated,
+        Wait
     }
 
     [SerializeField] protected int attackPower = 5;
@@ -45,7 +46,7 @@ public class EnemyAI : MonoBehaviour
 
     protected EnemyState currentState = EnemyState.Idle;
     protected bool isBusy;
-    protected void Start()
+    protected virtual void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -53,6 +54,36 @@ public class EnemyAI : MonoBehaviour
 
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    protected void StopWhenPlayerBeaten()
+    {
+        if (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
+        {
+            currentState = EnemyState.Idle;
+            agent.speed = 0;
+            agent.angularSpeed = 0;
+        }
+    }
+
+    public void OnDeath()
+    {
+        if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
+        {
+            currentState = EnemyState.Defeated;
+            isBusy = false;
+
+            StopAllCoroutines();
+            DisableAttackCollider();
+            if (agent != null && agent.enabled)
+            {
+                agent.speed = 0;
+                agent.angularSpeed = 0;
+                agent.enabled = true;
+                agent.velocity = Vector3.zero;
+                agent.isStopped = false;
+            }
+        }
     }
 
     protected void SetMovement(float speed)
@@ -126,9 +157,6 @@ public class EnemyAI : MonoBehaviour
     {
         attackTrigger.GetComponent<Collider>().enabled = false;
     }
-
-
-
 
 
 }

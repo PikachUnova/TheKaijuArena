@@ -56,12 +56,15 @@ public class CombatManager : MonoBehaviour
             
         if (player.GetComponent<PlayerHealth>().IsDefeated())
         {
+            AudioManager.audioManager.StopMusic();
+            AudioManager.audioManager.PlaySFX(5);
             player.GetComponent<PlayerHealth>().Respawn();
             currentWave = 0;
             hasStarted = false;
             levelComplete = false;
             combatText.text = "";
             enemySpawner.ClearEnemies();
+            AudioManager.audioManager.PlayTrack(1);
         }
         else if (IsLevelComplete())
         {

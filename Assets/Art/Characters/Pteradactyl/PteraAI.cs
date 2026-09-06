@@ -21,7 +21,7 @@ public class PteraAI : EnemyAI
 
     private bool isFlying = false;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         StartCoroutine(Idle());
@@ -30,22 +30,8 @@ public class PteraAI : EnemyAI
     // Update is called once per frame
     void Update()
     {
-        if (isBusy || !isFlying)
-            return;
-        
-        if  (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
-            currentState = EnemyState.Idle;
-        
-        if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
-        {
-            currentState = EnemyState.Defeated;
-            isBusy = true;
-            StopAllCoroutines();
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            enabled = false;
-        }
-        
+        if (isBusy || !isFlying) return;
+        StopWhenPlayerBeaten();
 
         float distance = Vector3.Distance(transform.position, player.position);
         switch (currentState)
@@ -108,7 +94,6 @@ public class PteraAI : EnemyAI
     {
         isBusy = true;
         currentState = EnemyState.Shoot;
-
         agent.isStopped = true;
 
         // Face the player
@@ -178,6 +163,7 @@ public class PteraAI : EnemyAI
 
         while (elapsedTime < duration)
         {
+
             elapsedTime += Time.deltaTime;
             agent.baseOffset = Mathf.Lerp(startOffset, targetOffset, elapsedTime / duration);
             yield return null;

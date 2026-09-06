@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerProjectile : BasePlayerProjectile
 {
-    void Start()
+    protected override void  Start()
     {
         base.Start();
     }

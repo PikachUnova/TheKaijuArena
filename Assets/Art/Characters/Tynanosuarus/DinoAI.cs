@@ -7,10 +7,12 @@ public class DinoAI : EnemyAI
     [Header("Shooting")]
     [SerializeField] private float shootCooldown = 5f;
     [SerializeField] private float aimDuration = 3f;
+    [SerializeField] private int numberOfShots = 3;
     private float shootTimer = 0;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
         base.Start();
     }
@@ -18,25 +20,8 @@ public class DinoAI : EnemyAI
     // Update is called once per frame
     void Update()
     {
-
-        if (isBusy)
-            return;
-
-        if  (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
-            currentState = EnemyState.Idle;
-        
-        
-        if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
-        {
-            isBusy = true;
-            StopAllCoroutines();
-            currentState = EnemyState.Defeated;
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            enabled = false;
-        }
-
-
+        if (isBusy) return;
+        StopWhenPlayerBeaten();
 
         float distance = Vector3.Distance(transform.position, player.position);
         switch (currentState)
@@ -57,11 +42,20 @@ public class DinoAI : EnemyAI
                 SetMovement(0.5f);
 
                 if (distance <= attackRange)
-                    StartCoroutine(AttackRoutine());
+                
+                    MeleeAttack();
+                
                 else if (distance >= rangedAttackRange && distance <= detectionRange && shootCooldown <= shootTimer)
-                    StartCoroutine(RangedAttackRoutine());
+                
+                    RangedAttack();
+                
                 break;
         }
+    }
+
+    void MeleeAttack()
+    {
+        StartCoroutine(AttackRoutine());
     }
 
     protected IEnumerator AttackRoutine()
@@ -77,19 +71,13 @@ public class DinoAI : EnemyAI
             Vector3 direction = player.position - transform.position;
             direction.y = 0f;
 
-            if (direction.sqrMagnitude < 0.01f)
-                break;
+            if (direction.sqrMagnitude < 0.01f) break;
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
-            );
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            if (Quaternion.Angle(transform.rotation, targetRotation) < 2f)
-                break;
+            if (Quaternion.Angle(transform.rotation, targetRotation) < 2f) break;
 
             yield return null;
         }
@@ -112,6 +100,11 @@ public class DinoAI : EnemyAI
         isBusy = false;
     }
 
+      void RangedAttack()
+    {
+        StartCoroutine(RangedAttackRoutine());
+    }
+
     protected IEnumerator RangedAttackRoutine()
     {
         isBusy = true;
@@ -122,11 +115,12 @@ public class DinoAI : EnemyAI
 
         // Aim at the player
         Vector3 targetPosition;
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < numberOfShots; i++)
         {
             yield return new WaitForSeconds(aimDuration);
             targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
             transform.LookAt(targetPosition);
+
             animator.Play("Shoot");
         }
 

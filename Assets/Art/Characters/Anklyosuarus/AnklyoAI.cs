@@ -12,7 +12,7 @@ public class AnklyoAI : EnemyAI
     private float rollTimer;
 
     // Idles at first and then start the combat
-    void Start()
+    protected override void Start()
     {
         base.Start();
         StartCoroutine(Idle());
@@ -20,23 +20,8 @@ public class AnklyoAI : EnemyAI
 
     void Update()
     {
-        if (isBusy)
-            return;
-
-        if  (player == null || player.gameObject.GetComponent<PlayerHealth>().currentHealth <= 0)
-            currentState = EnemyState.Idle;
-        
-        
-        if (this.gameObject.GetComponent<EnemyHealth>().currentHealth <= 0)
-        {
-            isBusy = true;
-            StopAllCoroutines();
-            currentState = EnemyState.Defeated;
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            enabled = false;
-        }
-        
+        if (isBusy) return;
+        StopWhenPlayerBeaten();
 
         float distance = Vector3.Distance(transform.position, player.position);
         switch (currentState)

@@ -12,7 +12,7 @@ public class BasePlayerProjectile : MonoBehaviour
 
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         Destroy(this.gameObject, 5.0f); // Exist until 5 seconds passed
     }

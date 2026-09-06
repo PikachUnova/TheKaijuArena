@@ -8,7 +8,7 @@ public class HomingProjectile : BasePlayerProjectile
     // Homing onto enemies
     private Transform currentTarget;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         FindNearestTarget();

@@ -32,6 +32,8 @@ public class EnemyHealth : MonoBehaviour
 
     public void Faint()
     {
+        EnemyAI victim = gameObject.GetComponent<EnemyAI>();
+        victim.OnDeath();
         animator.Play("Death");
         Destroy(this.gameObject, 3.0f);
     }
