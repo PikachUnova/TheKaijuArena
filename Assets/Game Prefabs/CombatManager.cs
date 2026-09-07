@@ -64,7 +64,6 @@ public class CombatManager : MonoBehaviour
             levelComplete = false;
             combatText.text = "";
             enemySpawner.ClearEnemies();
-            AudioManager.audioManager.PlayTrack(1);
         }
         else if (IsLevelComplete())
         {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HomingProjectile : BasePlayerProjectile
+public class PlayerHomingProjectile : BasePlayerProjectile
 {
     public float rotationSpeed = 0.5f;
     private float homeTimer = 0.0f;
@@ -20,7 +20,7 @@ public class HomingProjectile : BasePlayerProjectile
 
         if (currentTarget != null)
         {
-            if (homeTimer > 1)
+            if (homeTimer > 0.5f)
             {
                 // Move towards the current target
                 transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, speed * Time.deltaTime);

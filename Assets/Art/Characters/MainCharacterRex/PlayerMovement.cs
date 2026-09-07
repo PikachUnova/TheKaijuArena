@@ -465,15 +465,6 @@ public class PlayerMovement : MonoBehaviour
             aimConstraint.data = data;
         }
     }
-/*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            other.GetComponent<EnemyHealth>().TakeDamage(5);
-        }
-        
-    }*/
 
     public void EnableAttackCollider()
     {

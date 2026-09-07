@@ -822,7 +822,7 @@ Transform:
   m_GameObject: {fileID: 3398731736474861650}
   serializedVersion: 2
   m_LocalRotation: {x: 0.22367066, y: -0.7442255, z: 0.30123892, w: 0.55258936}
-  m_LocalPosition: {x: -12.736319, y: 3.0718827, z: 84.076294}
+  m_LocalPosition: {x: 2.969327, y: 3.0031326, z: 0.8971735}
   m_LocalScale: {x: 0.62499994, y: 0.625, z: 0.62499994}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2962,6 +2962,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shooter
       objectReference: {fileID: 0}
+    - target: {fileID: 5982139121507846380, guid: 13d5cb61d27af4d0aa2d9fe35e7a3e9f, type: 3}
+      propertyPath: ice
+      value: 
+      objectReference: {fileID: 3582458298610696518, guid: ef5b91b832c514ee7b39e9806cb90936, type: 3}
     - target: {fileID: 5982139121507846380, guid: 13d5cb61d27af4d0aa2d9fe35e7a3e9f, type: 3}
       propertyPath: fireHome
       value: 

@@ -5,7 +5,8 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - fire: {fileID: 3767986700269957175, guid: cdc4e4946f74f4bf0aa81d33df4fec12, type: 3}
-  - fireHome: {fileID: 9058714003877577319, guid: 7740bcdd289aa4d3db52f285fa6eae8f, type: 3}
+  - fireHome: {fileID: 3767986700269957175, guid: 16eb0765a3bff463a8ccf93dc1940068, type: 3}
+  - ice: {fileID: 3582458298610696518, guid: ef5b91b832c514ee7b39e9806cb90936, type: 3}
   - fireMuzzle: {fileID: 5401980813367830420, guid: 5b6dd6ee5b166426bb1a55d8248a085b, type: 3}
   - fireMuzzleHome: {fileID: 5401980813367830420, guid: 5b6dd6ee5b166426bb1a55d8248a085b, type: 3}
   executionOrder: 0

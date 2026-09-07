@@ -20,7 +20,7 @@ public class BaseEnemyProjectile : MonoBehaviour
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")) // Damage Player
         {

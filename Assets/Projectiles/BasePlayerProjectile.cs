@@ -17,7 +17,7 @@ public class BasePlayerProjectile : MonoBehaviour
         Destroy(this.gameObject, 5.0f); // Exist until 5 seconds passed
     }
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy")) // Damage Enemy
         {

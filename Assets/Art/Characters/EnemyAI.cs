@@ -38,10 +38,14 @@ public class EnemyAI : MonoBehaviour
     [Header("Timing")]
     [SerializeField] protected float attackDuration = 1.0f;
 
-        [Header("Back Jump")]
-        [SerializeField] private float backJumpDistance = 6f;
-        [SerializeField] private float backJumpHeight = 1.5f;
-        [SerializeField] private float backJumpDuration = 0.5f;
+    [Header("Back Jump")]
+    [SerializeField] private float backJumpDistance = 6f;
+    [SerializeField] private float backJumpHeight = 1.5f;
+    [SerializeField] private float backJumpDuration = 0.5f;
+
+    [Header("Freeze Effect")]
+    public GameObject freezeEffect; // Visual effect for freezing
+    private bool isFrozen = false;
 
 
     protected EnemyState currentState = EnemyState.Idle;
@@ -158,5 +162,49 @@ public class EnemyAI : MonoBehaviour
         attackTrigger.GetComponent<Collider>().enabled = false;
     }
 
+    public void Freeze(float time)
+    {
+        // No change if already frozen
+        if (isFrozen) return;
+
+        // Instantiate a visual effect for freezing
+        //if (freezeEffect != null)
+        //{
+            this.enabled = false;
+            agent.velocity = Vector3.zero;
+            agent.speed = 0;
+            agent.isStopped = true;
+            animator.enabled = false;
+            isFrozen = true;
+            StopAllCoroutines();
+            //freezeEffect.SetActive(true);
+            StartCoroutine(UnfreezeEnemyCoroutine(time));
+        //}
+    }
+    private IEnumerator UnfreezeEnemyCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (isFrozen)
+        {
+            isFrozen = false;
+            this.enabled = true;
+            agent.speed = movementSpeed;
+            agent.isStopped = false;
+            //freezeEffect.SetActive(false);
+            animator.enabled = true;
+            currentState = EnemyState.Chase;
+            isBusy = false;
+        }
+    }
+
+    public void DestroyIce()
+    {
+        // Deactivate the freeze effect prefab
+        if (freezeEffect != null)
+        {
+            //Instantiate(brokenIcePieces, transform.position, transform.rotation);
+            
+        }
+    }
 
 }

@@ -61,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = stats.maxHealth;
         UIHandler.handler.health = stats.maxHealth;
 
+        AudioManager.audioManager.PlayTrack(1);
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");
         npc.GetComponent<NPCInteractable>().StartCoversationLoss();
     }

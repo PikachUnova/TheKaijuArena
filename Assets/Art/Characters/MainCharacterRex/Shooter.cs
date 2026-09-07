@@ -10,6 +10,8 @@ public class PlayerShooter : MonoBehaviour
     public GameObject fire;
     public GameObject fireHome;
 
+    public GameObject ice;
+
 
     // Prevents overshooting
     public bool canShoot;
@@ -47,15 +49,20 @@ public class PlayerShooter : MonoBehaviour
 
     void ShootFire()
     {
-        int randomFire = Random.Range(0, 3); 
+        int randomFire = Random.Range(2, 3); 
         if (randomFire == 0)
         {
             Instantiate(fireHome, this.transform.position, this.transform.rotation);
             fireMuzzleHome.GetComponent<ParticleSystem>().Play();
         }
-        else
+        else if (randomFire == 1)
         {
             Instantiate(fire, this.transform.position, this.transform.rotation);
+            fireMuzzle.GetComponent<ParticleSystem>().Play();
+        }
+        else
+        {
+            Instantiate(ice, this.transform.position, this.transform.rotation);
             fireMuzzle.GetComponent<ParticleSystem>().Play();
         }
     }

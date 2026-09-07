@@ -10,14 +10,11 @@ public class DinoAI : EnemyAI
     [SerializeField] private int numberOfShots = 3;
     private float shootTimer = 0;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isBusy) return;
@@ -65,22 +62,6 @@ public class DinoAI : EnemyAI
 
         agent.isStopped = true;
         SetMovement(0f);
-        
-        while (true)
-        {
-            Vector3 direction = player.position - transform.position;
-            direction.y = 0f;
-
-            if (direction.sqrMagnitude < 0.01f) break;
-
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-            if (Quaternion.Angle(transform.rotation, targetRotation) < 2f) break;
-
-            yield return null;
-        }
 
         animator.Play("Attack");
         yield return new WaitForSeconds(attackDuration);
@@ -96,6 +77,22 @@ public class DinoAI : EnemyAI
             agent.isStopped = true;
             SetMovement(0f);
             currentState = EnemyState.Chase;
+            while (true)
+            {
+                Vector3 direction = player.position - transform.position;
+                direction.y = 0f;
+
+                if (direction.sqrMagnitude < 0.01f) break;
+
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 2f) break;
+
+                yield return null;
+            }
+            
         }
         isBusy = false;
     }
