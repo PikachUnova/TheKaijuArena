@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 177cb079c148a41e98ec13767d89c052, type: 3}
-  m_Name: CombatLevel3Data
+  m_Name: CombatLevel8Data
   m_EditorClassIdentifier: 
   waves:
   - enemyPrefabs:
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 2389424805033517218, guid: 7604c6e53a1c441dcae7ce9729563f49, type: 3}
+  - enemyPrefabs:
+    - {fileID: 1128438881881120478, guid: 151202e851d0e4d9b9dcd79917bf9d96, type: 3}
+    - {fileID: 2389424805033517218, guid: 7604c6e53a1c441dcae7ce9729563f49, type: 3}
+  - enemyPrefabs:
+    - {fileID: 2389424805033517218, guid: 7604c6e53a1c441dcae7ce9729563f49, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+  - enemyPrefabs:
+    - {fileID: 1128438881881120478, guid: 151202e851d0e4d9b9dcd79917bf9d96, type: 3}
+    - {fileID: 2389424805033517218, guid: 7604c6e53a1c441dcae7ce9729563f49, type: 3}
+    - {fileID: 3650390316124551110, guid: 38b94608e6cda43859ccaa107a57d42f, type: 3}
   - enemyPrefabs:
     - {fileID: 3650390316124551110, guid: 38b94608e6cda43859ccaa107a57d42f, type: 3}
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-  - enemyPrefabs:
-    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-  - enemyPrefabs:
-    - {fileID: 3650390316124551110, guid: 38b94608e6cda43859ccaa107a57d42f, type: 3}
-    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-  - enemyPrefabs:
-    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-  level: 3
+    - {fileID: 2389424805033517218, guid: 7604c6e53a1c441dcae7ce9729563f49, type: 3}
+  level: 8

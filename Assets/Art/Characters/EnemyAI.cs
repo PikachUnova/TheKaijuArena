@@ -44,6 +44,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float backJumpDuration = 0.5f;
 
     [Header("Freeze Effect")]
+    [SerializeField] private Renderer enemyRenderer;
+    [SerializeField] private Material originalMaterial;
+    [SerializeField] private Material frozenMaterial;
     public GameObject freezeEffect; // Visual effect for freezing
     private bool isFrozen = false;
 
@@ -167,44 +170,63 @@ public class EnemyAI : MonoBehaviour
         // No change if already frozen
         if (isFrozen) return;
 
-        // Instantiate a visual effect for freezing
-        //if (freezeEffect != null)
-        //{
-            this.enabled = false;
-            agent.velocity = Vector3.zero;
-            agent.speed = 0;
-            agent.isStopped = true;
-            animator.enabled = false;
-            isFrozen = true;
-            StopAllCoroutines();
-            //freezeEffect.SetActive(true);
-            StartCoroutine(UnfreezeEnemyCoroutine(time));
-        //}
+        if (freezeEffect != null)
+            Instantiate(freezeEffect, this.transform.position, this.transform.rotation);
+
+        if (enemyRenderer != null && frozenMaterial != null)
+        {
+            Material[] currentMats = enemyRenderer.materials;
+            Material[] newMats = new Material[currentMats.Length + 1];
+
+            for (int i = 0; i < currentMats.Length; i++)
+                newMats[i] = currentMats[i];
+            
+            newMats[newMats.Length - 1] = frozenMaterial;
+            enemyRenderer.materials = newMats;
+        }
+        
+        this.enabled = false;
+        agent.velocity = Vector3.zero;
+        agent.speed = 0;
+        agent.isStopped = true;
+        animator.enabled = false;
+        isFrozen = true;
+        StopAllCoroutines();
+        StartCoroutine(UnfreezeEnemyCoroutine(time));
+        
     }
     private IEnumerator UnfreezeEnemyCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
         if (isFrozen)
         {
-            isFrozen = false;
-            this.enabled = true;
-            agent.speed = movementSpeed;
-            agent.isStopped = false;
-            //freezeEffect.SetActive(false);
-            animator.enabled = true;
-            currentState = EnemyState.Chase;
-            isBusy = false;
+            Unfreeze();
         }
     }
 
-    public void DestroyIce()
+    public void Unfreeze()
     {
-        // Deactivate the freeze effect prefab
-        if (freezeEffect != null)
+        isFrozen = false;
+        this.enabled = true;
+        agent.speed = movementSpeed;
+        agent.isStopped = false;
+        animator.enabled = true;
+        currentState = EnemyState.Chase;
+        if (enemyRenderer != null && frozenMaterial != null)
         {
-            //Instantiate(brokenIcePieces, transform.position, transform.rotation);
-            
+            Material[] currentMats = enemyRenderer.materials;
+            Material[] newMats = new Material[currentMats.Length - 1];
+
+            newMats[0] = currentMats[0];
+            newMats[0] = originalMaterial;
+            enemyRenderer.materials = newMats;
         }
+        isBusy = false;
+    }
+
+    public bool IsFrozen()
+    {
+        return isFrozen;
     }
 
 }

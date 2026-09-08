@@ -15,17 +15,22 @@ MonoBehaviour:
   waves:
   - enemyPrefabs:
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    enemyCount: 2
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
   - enemyPrefabs:
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    enemyCount: 3
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
   - enemyPrefabs:
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    enemyCount: 4
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
   - enemyPrefabs:
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    enemyCount: 5
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
+    - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
   - enemyPrefabs:
     - {fileID: 6394073770609132619, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
-    enemyCount: 1
   level: 4

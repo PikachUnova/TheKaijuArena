@@ -9,8 +9,10 @@ public class EnemyIceProjectile : BaseEnemyProjectile
     {
         if (other.gameObject.CompareTag("Player")) // Damage Player
         {
+            if (other.GetComponent<PlayerHealth>().currentHealth > attackPower)
+                other.GetComponent<PlayerMovement>().Freeze(freezeTime);
+
             other.GetComponent<PlayerHealth>().TakeDamage(attackPower);
-            //other.GetComponent<PlayerMovement>().Freeze(freezeTime);
             if (impact != null)
                 Instantiate(impact, transform.position, transform.rotation);
             AudioManager.audioManager.PlaySFX(2);

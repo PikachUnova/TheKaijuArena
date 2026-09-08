@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isInvulnerable || currentHealth <= 0) return;
+        if (isInvulnerable) return;
 
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
@@ -33,6 +33,10 @@ public class EnemyHealth : MonoBehaviour
     public void Faint()
     {
         EnemyAI victim = gameObject.GetComponent<EnemyAI>();
+        if (victim.IsFrozen())
+            victim.Unfreeze();
+        
+        this.GetComponent<CapsuleCollider>().enabled = false;
         victim.OnDeath();
         animator.Play("Death");
         Destroy(this.gameObject, 3.0f);
@@ -42,7 +46,5 @@ public class EnemyHealth : MonoBehaviour
     {
         isInvulnerable = value;
     }
-
-
 
 }

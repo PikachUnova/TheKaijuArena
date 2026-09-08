@@ -11,11 +11,14 @@ public class PlayerIceProjectile : BasePlayerProjectile
 
     protected override void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ICE");
         if (other.gameObject.CompareTag("Enemy")) // Damage Enemy
         {
+            if (other.GetComponent<EnemyHealth>().currentHealth > attackPower)
+                other.GetComponent<EnemyAI>().Freeze(freezeTime);
+            else if (other.GetComponent<EnemyAI>().IsFrozen())
+                other.GetComponent<EnemyAI>().Unfreeze();
+
             other.GetComponent<EnemyHealth>().TakeDamage(attackPower);
-            other.GetComponent<EnemyAI>().Freeze(freezeTime);
             if (impact != null)
                 Instantiate(impact, transform.position, transform.rotation);
             AudioManager.audioManager.PlaySFX(2);

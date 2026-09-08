@@ -6,9 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public CharacterStats stats;
     public float currentHealth;
-
     public Vector3 savePoint;
-
     private Animator animator;
 
     void Start()
@@ -36,8 +34,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void Faint()
     {
+        PlayerMovement victim = gameObject.GetComponent<PlayerMovement>();
+        if (victim.IsFrozen())
+            victim.Unfreeze();
+        
         animator.Play("Death");
-        this.GetComponent<PlayerMovement>().enabled = false;
+        victim.enabled = false;
     }
 
     public void Respawn()
@@ -58,12 +60,17 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();
 
-        currentHealth = stats.maxHealth;
-        UIHandler.handler.health = stats.maxHealth;
+        ResetHealth();
 
         AudioManager.audioManager.PlayTrack(1);
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");
         npc.GetComponent<NPCInteractable>().StartCoversationLoss();
+    }
+
+    public void ResetHealth()
+    {
+        currentHealth = stats.maxHealth;
+        UIHandler.handler.health = stats.maxHealth;
     }
 
     public void SetPlayerTransformation(Vector3 point)

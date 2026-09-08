@@ -133,7 +133,7 @@ public class CombatManager : MonoBehaviour
         currentWave++;
         if (currentWave != 1)
             StartCoroutine(DisplayText("Wave " + currentWave));
-        enemySpawner.SpawnEnemies(combatLevelData.waves[currentWave - 1].enemyPrefabs, combatLevelData.waves[currentWave - 1].enemyCount);
+        enemySpawner.SpawnEnemies(combatLevelData.waves[currentWave - 1].enemyPrefabs);
     }
 
     public void CheckWaveComplete()
@@ -171,6 +171,7 @@ public class CombatManager : MonoBehaviour
         combatText.text = "";
         UIHandler.handler.FadeOut();
         yield return new WaitForSeconds(0.7f);
+        player.GetComponent<PlayerHealth>().ResetHealth();
         SetPlayerLocation(npcPosition);
         yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();

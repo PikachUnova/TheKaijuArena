@@ -24,6 +24,7 @@ public class PlayerShooter : MonoBehaviour
     // Muzzles
     public ParticleSystem fireMuzzle;
     public ParticleSystem fireMuzzleHome;
+    public ParticleSystem iceMuzzle;
 
     private AudioSource audioSource;
     void Start()
@@ -31,6 +32,7 @@ public class PlayerShooter : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         fireMuzzle.GetComponent<ParticleSystem>().Stop();
         fireMuzzleHome.GetComponent<ParticleSystem>().Stop();
+        iceMuzzle.GetComponent<ParticleSystem>().Stop();
     }
 
     // Update is called once per frame
@@ -49,7 +51,7 @@ public class PlayerShooter : MonoBehaviour
 
     void ShootFire()
     {
-        int randomFire = Random.Range(2, 3); 
+        int randomFire = Random.Range(1, 2); 
         if (randomFire == 0)
         {
             Instantiate(fireHome, this.transform.position, this.transform.rotation);
@@ -63,7 +65,7 @@ public class PlayerShooter : MonoBehaviour
         else
         {
             Instantiate(ice, this.transform.position, this.transform.rotation);
-            fireMuzzle.GetComponent<ParticleSystem>().Play();
+            iceMuzzle.GetComponent<ParticleSystem>().Play();
         }
     }
     

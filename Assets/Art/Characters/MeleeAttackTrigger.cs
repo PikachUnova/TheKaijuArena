@@ -15,6 +15,10 @@ public class MeleeAttackTrigger : MonoBehaviour
             other.GetComponent<PlayerHealth>().TakeDamage(stats.attackPower);
         }
 
+        PlayerMovement victim = other.GetComponent<PlayerMovement>();
+        if (victim == null || victim.IsFrozen()) return;
+
+
         // Knockback
         CharacterController player = other.GetComponent<CharacterController>();
 
@@ -30,24 +34,22 @@ public class MeleeAttackTrigger : MonoBehaviour
         
     }
 
-    private IEnumerator Knockback(
-    CharacterController player,
-    Vector3 direction)
-{
-    float knockbackDuration = 0.5f;
-
-    float elapsed = 0f;
-
-    while (elapsed < knockbackDuration)
+    private IEnumerator Knockback(CharacterController player,Vector3 direction)
     {
-        float strength = Mathf.Lerp(knockbackForce, 0f, elapsed / knockbackDuration);
+        float knockbackDuration = 0.5f;
 
-        player.Move(direction * strength * Time.deltaTime);
+        float elapsed = 0f;
 
-        elapsed += Time.deltaTime;
+        while (elapsed < knockbackDuration)
+        {
+            float strength = Mathf.Lerp(knockbackForce, 0f, elapsed / knockbackDuration);
 
-        yield return null;
+            player.Move(direction * strength * Time.deltaTime);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
     }
-}
 
 }

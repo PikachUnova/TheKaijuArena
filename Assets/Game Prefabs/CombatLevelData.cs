@@ -7,8 +7,6 @@ public class CombatLevelData : ScriptableObject
     public class WaveData
     {
         public GameObject[] enemyPrefabs;
-
-        public int enemyCount = 1;
     }
 
     public WaveData[] waves;

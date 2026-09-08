@@ -467,6 +467,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c1a8cbbe1d66448f93ec53d1e0c0ef0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3153299777275074958}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c1a8cbbe1d66448f93ec53d1e0c0ef0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5267532309775827108}
   m_SourcePrefab: {fileID: 100100000, guid: 6c1a8cbbe1d66448f93ec53d1e0c0ef0, type: 3}
 --- !u!1 &1414428762019561109 stripped
 GameObject:
@@ -572,8 +575,6 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 5640194648974995569}
   fire: {fileID: 8053896815298010388, guid: 5b8451db9af32423bb6b9cf08743112d, type: 3}
   attackTrigger: {fileID: 2779776049007974266}
-  soundClips:
-  - {fileID: 8300000, guid: e6a7ba79645be4a499a167aacfa76c2d, type: 3}
   detectionRange: 20
   attackRange: 2
   rangedAttackRange: 4
@@ -583,8 +584,40 @@ MonoBehaviour:
   backJumpDistance: 6
   backJumpHeight: 1.5
   backJumpDuration: 0.5
+  enemyRenderer: {fileID: 5992307075808741187}
+  originalMaterial: {fileID: 2100000, guid: 336ca3bfd0a2640178a30a8220b5ebae, type: 2}
+  frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
+  freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
   shootCooldown: 2
   aimDuration: 0.5
+  numberOfShots: 3
+--- !u!54 &-5267532309775827108
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414428762019561109}
+  serializedVersion: 4
+  m_Mass: 70
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!4 &1795493535482717231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6c1a8cbbe1d66448f93ec53d1e0c0ef0, type: 3}
@@ -593,6 +626,11 @@ Transform:
 --- !u!4 &5087179210013089632 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6483261719721106596, guid: 6c1a8cbbe1d66448f93ec53d1e0c0ef0, type: 3}
+  m_PrefabInstance: {fileID: 2260919880188969924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5992307075808741187 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5496807376900818055, guid: 6c1a8cbbe1d66448f93ec53d1e0c0ef0, type: 3}
   m_PrefabInstance: {fileID: 2260919880188969924}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5571281650765116661

@@ -7,9 +7,9 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
 
-    public void SpawnEnemies(GameObject [] enemyPrefabs, int amount)
+    public void SpawnEnemies(GameObject [] enemyPrefabs)
     {
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < i%enemyPrefabs.Length; i++)
         {
             Transform spawnPoint = spawnPoints[i % spawnPoints.Length];
             Instantiate(enemyPrefabs[i%enemyPrefabs.Length], spawnPoint.position, spawnPoint.rotation);

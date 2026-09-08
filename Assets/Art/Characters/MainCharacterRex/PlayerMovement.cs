@@ -65,6 +65,13 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_dodgeAction;
     private InputAction m_attackAction;
 
+    [Header("Freeze Effect")]
+    [SerializeField] private Renderer playerRenderer;
+    [SerializeField] private Material originalMaterial;
+    [SerializeField] private Material frozenMaterial;
+    public GameObject freezeEffect; // Visual effect for freezing
+    private bool isFrozen = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -477,6 +484,65 @@ public class PlayerMovement : MonoBehaviour
     {
         //Debug.Log("Player Disable Collider");
         attackTrigger.GetComponent<Collider>().enabled = false;
+    }
+
+    public void Freeze(float time)
+    {
+        // No change if already frozen
+        if (isFrozen) return;
+
+        // Instantiate a visual effect for freezing
+        if (freezeEffect != null)
+            Instantiate(freezeEffect, this.transform.position, this.transform.rotation);
+
+        if (playerRenderer != null && frozenMaterial != null)
+        {
+            // Cannot directly resize a basic array
+            Material[] currentMats = playerRenderer.materials;
+            Material[] newMats = new Material[currentMats.Length + 1];
+
+            for (int i = 0; i < currentMats.Length; i++)
+                newMats[i] = currentMats[i];
+            
+            newMats[newMats.Length - 1] = frozenMaterial;
+            playerRenderer.materials = newMats;
+        }
+        
+        this.enabled = false;
+        animator.enabled = false;
+        isFrozen = true;
+        StopAllCoroutines();
+        StartCoroutine(UnfreezeEnemyCoroutine(time));
+    }
+
+    private IEnumerator UnfreezeEnemyCoroutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (isFrozen)
+        {
+            Unfreeze();
+        }
+    }
+
+    public void Unfreeze()
+    {
+        isFrozen = false;
+        this.enabled = true;
+        if (playerRenderer != null && frozenMaterial != null)
+        {
+            Material[] currentMats = playerRenderer.materials;
+            Material[] newMats = new Material[currentMats.Length - 1];
+
+            newMats[0] = currentMats[0];
+            newMats[0] = originalMaterial;
+            playerRenderer.materials = newMats;
+        }
+        animator.enabled = true;
+    }
+
+    public bool IsFrozen()
+    {
+        return isFrozen;
     }
 
 }

@@ -12,12 +12,14 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+
             EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
-            
             if (enemy != null)
-            {
                 enemy.TakeDamage(stats.attackPower);
-            }
+            
+
+            if (other.GetComponent<EnemyAI>().IsFrozen())
+                return;
 
             // Knockback
             NavMeshAgent agent = other.GetComponentInParent<NavMeshAgent>();

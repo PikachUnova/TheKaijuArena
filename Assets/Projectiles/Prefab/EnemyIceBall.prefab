@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 16
-  attackPower: 8
+  attackPower: 4
   layerMask:
     serializedVersion: 2
     m_Bits: 64
