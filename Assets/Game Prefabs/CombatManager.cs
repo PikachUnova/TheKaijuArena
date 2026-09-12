@@ -134,6 +134,7 @@ public class CombatManager : MonoBehaviour
         if (currentWave != 1)
             StartCoroutine(DisplayText("Wave " + currentWave));
         enemySpawner.SpawnEnemies(combatLevelData.waves[currentWave - 1].enemyPrefabs);
+
     }
 
     public void CheckWaveComplete()
@@ -143,6 +144,8 @@ public class CombatManager : MonoBehaviour
             StartNextWave();
         }
     }
+
+    //private IEnumerator WaitUntilNextWave(){}
 
     private void CompleteLevel()
     {

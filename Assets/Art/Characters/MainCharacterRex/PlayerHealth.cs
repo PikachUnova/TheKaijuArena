@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     public Vector3 savePoint;
     private Animator animator;
+    public bool isDefeated = false;
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
             victim.Unfreeze();
         
         animator.Play("Death");
-        victim.enabled = false;
+        isDefeated = true;
     }
 
     public void Respawn()
@@ -59,7 +60,7 @@ public class PlayerHealth : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();
-
+        isDefeated = false;
         ResetHealth();
 
         AudioManager.audioManager.PlayTrack(1);

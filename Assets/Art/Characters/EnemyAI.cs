@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected Transform player;
     [SerializeField] protected Transform projectileSpawnPoint;
     [SerializeField] protected GameObject fire;
-    [SerializeField] protected Collider attackTrigger;
+    [SerializeField] protected Collider [] attackTriggers;
 
     protected NavMeshAgent agent;
     protected Animator animator;
@@ -50,9 +50,11 @@ public class EnemyAI : MonoBehaviour
     public GameObject freezeEffect; // Visual effect for freezing
     private bool isFrozen = false;
 
-
+    [Header("States")]
     protected EnemyState currentState = EnemyState.Idle;
     protected bool isBusy;
+    [SerializeField] protected bool fallOnDefeat = false;
+
     protected virtual void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -81,14 +83,33 @@ public class EnemyAI : MonoBehaviour
             isBusy = false;
 
             StopAllCoroutines();
-            DisableAttackCollider();
-            if (agent != null && agent.enabled)
+            DisableAttackCollider(1);
+            if (agent != null)
             {
                 agent.speed = 0;
                 agent.angularSpeed = 0;
-                agent.enabled = true;
-                agent.velocity = Vector3.zero;
-                agent.isStopped = false;
+                agent.enabled = false;
+            }
+
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null && fallOnDefeat)
+            {
+                rb.isKinematic = false; // Turn off Kinematic so forces apply
+                rb.useGravity = true;
+                rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (currentState == EnemyState.Defeated && collision.gameObject.layer == LayerMask.NameToLayer("Grass"))
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.isKinematic = true;
             }
         }
     }
@@ -154,15 +175,16 @@ public class EnemyAI : MonoBehaviour
         return attackPower;
     }
 
-    public void EnableAttackCollider()
+    public void EnableAttackCollider(int move)
     {
         AudioManager.audioManager.PlaySFX(3);
-        attackTrigger.GetComponent<Collider>().enabled = true;
+        //Debug.Log(move-1);
+        attackTriggers[move-1].GetComponent<Collider>().enabled = true;
     }
 
-    public void DisableAttackCollider()
+    public void DisableAttackCollider(int move)
     {
-        attackTrigger.GetComponent<Collider>().enabled = false;
+        attackTriggers[move-1].GetComponent<Collider>().enabled = false;
     }
 
     public void Freeze(float time)

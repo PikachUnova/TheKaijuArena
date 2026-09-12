@@ -131,7 +131,7 @@ public class PteraAI : EnemyAI
 
         yield return new WaitForSeconds(0.1f);
 
-        EnableAttackCollider();
+        EnableAttackCollider(1);
         float elapsedTime = 0f;
         while (elapsedTime < 1.5f)
         {
@@ -141,7 +141,7 @@ public class PteraAI : EnemyAI
 
             yield return null;
         }
-        DisableAttackCollider();
+        DisableAttackCollider(2);
 
         // Return to flying height
         SetFlightHeight(flightHeight, 0.5f);

@@ -5,20 +5,34 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawn Points")]
+    public static EnemySpawner Instance { get; private set; }
     [SerializeField] private Transform[] spawnPoints;
+    public int enemiesLeft = 0;
+
+    private void Start()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     public void SpawnEnemies(GameObject [] enemyPrefabs)
     {
-        for (int i = 0; i < i%enemyPrefabs.Length; i++)
+        for (int i = 0; i < enemyPrefabs.Length; i++)
         {
             Transform spawnPoint = spawnPoints[i % spawnPoints.Length];
             Instantiate(enemyPrefabs[i%enemyPrefabs.Length], spawnPoint.position, spawnPoint.rotation);
+            enemiesLeft++;
         }
+    }
+
+    public void DecrementEnemy()
+    {
+        enemiesLeft--;
     }
 
     public int GetAliveEnemyCount()
     {
-        return GameObject.FindGameObjectsWithTag("Enemy").Length;
+        return enemiesLeft;
     }
 
     public void ClearEnemies()

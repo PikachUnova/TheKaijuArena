@@ -35,7 +35,8 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private IEnumerator KnockbackNavMesh(NavMeshAgent agent, Vector3 direction)
     {
-        agent.isStopped = false;
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh) // Avoid crashing
+            agent.isStopped = false;
 
         float elapsed = 0f;
         while (elapsed < 1f)
@@ -47,6 +48,7 @@ public class PlayerMeleeAttack : MonoBehaviour
             yield return null;
         }
 
-        agent.isStopped = true; 
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh) // Avoid crashing
+            agent.isStopped = true; 
     }
 }

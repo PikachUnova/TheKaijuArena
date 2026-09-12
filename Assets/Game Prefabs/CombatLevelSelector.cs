@@ -52,7 +52,6 @@ public class CombatLevelSelector : MonoBehaviour
     public void UnlockLevel()
     {
         currentLevel++;
-        Debug.Log("Unlocked Level " + currentLevel);
         buttons[(currentLevel - 1) % buttons.Length].interactable = true;
     }
 

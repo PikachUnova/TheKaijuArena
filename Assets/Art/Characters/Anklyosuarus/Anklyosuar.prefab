@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3392029728272051915}
   - component: {fileID: 4064539007522412007}
   m_Layer: 0
-  m_Name: AttackTrigger
+  m_Name: AttackTriggerRoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,6 +61,74 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525017726041387603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee763c6d9a42a4a9e986d4671f3a1d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 71bf2bb8f5ed94e418f79f324f6d87f2, type: 2}
+  knockbackForce: 20
+--- !u!1 &5592624287231751512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1630056402878754687}
+  - component: {fileID: 6032487893374197148}
+  - component: {fileID: 7126359198494124379}
+  m_Layer: 0
+  m_Name: AttackTriggerTail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1630056402878754687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592624287231751512}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.00427, z: -0.00001}
+  m_LocalScale: {x: 0.017500002, y: 0.017500002, z: 0.017500002}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7885849737594354664}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6032487893374197148
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592624287231751512}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7126359198494124379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592624287231751512}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee763c6d9a42a4a9e986d4671f3a1d48, type: 3}
@@ -165,6 +233,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6652144919914991229}
+    - targetCorrespondingSourceObject: {fileID: -1290203842161059737, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1630056402878754687}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
       insertIndex: -1
@@ -293,7 +364,9 @@ MonoBehaviour:
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
   fire: {fileID: 0}
-  attackTrigger: {fileID: 3392029728272051915}
+  attackTriggers:
+  - {fileID: 6032487893374197148}
+  - {fileID: 3392029728272051915}
   detectionRange: 30
   attackRange: 3
   rangedAttackRange: 0
@@ -307,6 +380,7 @@ MonoBehaviour:
   originalMaterial: {fileID: 2100000, guid: b16d6e275a9ee497f817bcbfccb5c4a8, type: 2}
   frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
   freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
+  fallOnDefeat: 0
   rollRange: 20
   rollSpeed: 20
   rollDuration: 2
@@ -341,6 +415,11 @@ Rigidbody:
 --- !u!137 &1712321657882018203 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7734070860804627948, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
+  m_PrefabInstance: {fileID: 245566021447869327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7885849737594354664 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1290203842161059737, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
   m_PrefabInstance: {fileID: 245566021447869327}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7749284757592498506

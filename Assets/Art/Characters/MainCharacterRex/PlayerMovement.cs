@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     public PlayerShooter shotMuzzle;
     private Animator animator;
     private CharacterController controller;
-    public GameObject attackTrigger;
 
     [Header("Movement")]
     private float moveSpeed = 0f;
@@ -25,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     // States
     [SerializeField] private bool isGrounded = true;
     private bool isRunning = false;
-    public bool canMove = true;
 
     [Header("Ground Test")]    
     [SerializeField] private float groundCheckRadius = 0.3f;
@@ -46,10 +44,12 @@ public class PlayerMovement : MonoBehaviour
     public CinemachineCamera freeLookCamera;  // Reference to the FreeLook Camera
     public CinemachineCamera TPCamera;  // Reference to the Virtual Camera
     private bool isAiming = false;
-
-    [Header("Aiming")]
     public MultiAimConstraint aimConstraint;
     public Transform lookTarget;
+
+    [Header("Melee Attacks")]
+    public GameObject [] attackTriggers;
+    
 
     [Header("Dodging")]
     [SerializeField] private float dodgeDistance = 6f;
@@ -110,39 +110,42 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() // Update is called once per frame
     {
-
-        if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
-            animator.Play("Shoot");
-        else if (m_attackAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // Melee Attack
-            animator.Play("Attack");
-
-        
-        Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
-                transform.position.z);
-        isGrounded = Physics.CheckSphere(spherePosition, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore); // Update Grounded
-
-        if (m_aimAction.WasPressedThisFrame()) // Trigger Aiming
+        if (!this.gameObject.GetComponent<PlayerHealth>().isDefeated)
         {
-            if (!isAiming)
-            {
-                isAiming = true;
-                LockCameraRotation(true);
-                freeLookCamera.gameObject.SetActive(false);
-                TPCamera.gameObject.SetActive(true);
-            }
-            else
-            {
-                isAiming = false;
-                LockCameraRotation(false);
-                freeLookCamera.gameObject.SetActive(true);
-                TPCamera.gameObject.SetActive(false);
-            }
-        }
+            if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
+                animator.Play("Shoot");
+            else if (m_attackAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // Melee Attack
+                animator.Play("Attack");
 
-        AnimatePlayerMotion();
-        Move();
-        Jump(); 
-        Dodge();
+            
+            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+                    transform.position.z);
+            isGrounded = Physics.CheckSphere(spherePosition, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore); // Update Grounded
+
+            if (m_aimAction.WasPressedThisFrame()) // Trigger Aiming
+            {
+                if (!isAiming)
+                {
+                    isAiming = true;
+                    LockCameraRotation(true);
+                    freeLookCamera.gameObject.SetActive(false);
+                    TPCamera.gameObject.SetActive(true);
+                }
+                else
+                {
+                    isAiming = false;
+                    LockCameraRotation(false);
+                    freeLookCamera.gameObject.SetActive(true);
+                    TPCamera.gameObject.SetActive(false);
+                }
+            }
+
+            AnimatePlayerMotion();
+            Move();
+            Jump(); 
+            Dodge();
+        }
+        
         Fall(); 
         Land();
 
@@ -249,7 +252,6 @@ public class PlayerMovement : MonoBehaviour
             velocity.y += 4f * jumpHeight * Time.deltaTime;
             jumpHoldTime -= Time.deltaTime;
         }
-        
     }
 
     void Fall()
@@ -291,7 +293,6 @@ public class PlayerMovement : MonoBehaviour
                 animator.Play("Dodge");
             }
         }
-
     }
 
     private IEnumerator Dodge(Vector3 direction)
@@ -334,17 +335,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (lookTarget != null)
         {
-            // Get mouse input
             float mouseX = Input.GetAxis("Mouse X");
             float mouseY = Input.GetAxis("Mouse Y");
 
-            // Get camera's right and up directions (ignore Z for up, ignore Y for right)
+            // Camera's right and up directions (ignore Z for up, ignore Y for right)
             Vector3 cameraRight = Camera.main.transform.right;
             Vector3 cameraUp = Camera.main.transform.up;
 
             // Flatten the axes so lookTarget stays in the desired plane
-            cameraRight.y = 0; // Keep horizontal movement flat
-            cameraUp.z = 0;    // Keep vertical movement flat
+            cameraRight.y = 0;
+            cameraUp.z = 0;
             cameraRight.Normalize();
             cameraUp.Normalize();
 
@@ -473,17 +473,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void EnableAttackCollider()
+    public void EnableAttackCollider(int move)
     {
-        //Debug.Log("Player Enable Collider");
+        Debug.Log("Player Enable Collider" + move);
         AudioManager.audioManager.PlaySFX(3);
-        attackTrigger.GetComponent<Collider>().enabled = true;
+        attackTriggers[move-1].GetComponent<Collider>().enabled = true;
     }
 
-    public void DisableAttackCollider()
+    public void DisableAttackCollider(int move)
     {
-        //Debug.Log("Player Disable Collider");
-        attackTrigger.GetComponent<Collider>().enabled = false;
+        Debug.Log("Player Disable Collider"  + move);
+        attackTriggers[move-1].GetComponent<Collider>().enabled = false;
     }
 
     public void Freeze(float time)

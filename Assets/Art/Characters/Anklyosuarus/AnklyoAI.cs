@@ -79,7 +79,7 @@ public class AnklyoAI : EnemyAI
             health.SetInvulnerable(true);
 
         animator.Play("Roll");
-        EnableAttackCollider();
+        EnableAttackCollider(2);
 
         yield return new WaitForSeconds(1f);
 
@@ -92,7 +92,7 @@ public class AnklyoAI : EnemyAI
         }
 
         animator.SetTrigger("Cancel");
-        DisableAttackCollider();
+        DisableAttackCollider(2);
 
         // Become vulnerable again
         if (health != null)
