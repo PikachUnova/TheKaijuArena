@@ -14,6 +14,8 @@ public class PlayerMeleeAttack : MonoBehaviour
         {
 
             EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
+            if (enemy.currentHealth <= 0) return; // Do nothing
+
             if (enemy != null)
                 enemy.TakeDamage(stats.attackPower);
             

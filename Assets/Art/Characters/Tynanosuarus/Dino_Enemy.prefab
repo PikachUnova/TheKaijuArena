@@ -838,6 +838,12 @@ MonoBehaviour:
   frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
   freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
   fallOnDefeat: 0
+  groundCheckRadius: 0.3
+  GroundedOffset: 0.25
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  isGrounded: 1
   shootCooldown: 2
   aimDuration: 0.5
   numberOfShots: 1

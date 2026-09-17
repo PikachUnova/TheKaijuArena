@@ -5,17 +5,19 @@ using System.Collections;
 public class DinoAI : EnemyAI
 {
     [Header("Shooting")]
-    [SerializeField] private float shootCooldown = 5f;
-    [SerializeField] private float aimDuration = 3f;
-    [SerializeField] private int numberOfShots = 3;
-    private float shootTimer = 0;
+    [SerializeField] protected float shootCooldown = 5f;
+    [SerializeField] protected float aimDuration = 0.5f;
+    [SerializeField] protected int minNumberOfShots = 1;
+    [SerializeField] protected int maxNumberOfShots = 3;
+    protected float shootTimer = 0;
+    protected bool tripleShot = false;
 
     protected override void Start()
     {
         base.Start();
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (isBusy) return;
         StopWhenPlayerBeaten();
@@ -97,7 +99,7 @@ public class DinoAI : EnemyAI
         isBusy = false;
     }
 
-      void RangedAttack()
+    void RangedAttack()
     {
         StartCoroutine(RangedAttackRoutine());
     }
@@ -110,9 +112,11 @@ public class DinoAI : EnemyAI
         agent.isStopped = true;
         SetMovement(0f);
 
+        int numShots = Random.Range(minNumberOfShots, maxNumberOfShots + 1);
+
         // Aim at the player
         Vector3 targetPosition;
-        for (int i = 0; i < numberOfShots; i++)
+        for (int i = 0; i < numShots; i++)
         {
             yield return new WaitForSeconds(aimDuration);
             targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z);
@@ -134,8 +138,21 @@ public class DinoAI : EnemyAI
         if (fire != null && projectileSpawnPoint != null)
         {
             AudioManager.audioManager.PlaySFX(0);
-            GameObject projectile = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+
+            if (!tripleShot)
+            {
+                GameObject projectile = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+            } 
+            else
+            {
+                GameObject projectile1 = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+                GameObject projectile2 = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+                GameObject projectile3 = Instantiate(fire, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+                projectile1.transform.Rotate(projectileSpawnPoint.transform.rotation.x, projectileSpawnPoint.transform.rotation.y + 10, projectileSpawnPoint.transform.rotation.z);
+                projectile3.transform.Rotate(projectileSpawnPoint.transform.rotation.x, projectileSpawnPoint.transform.rotation.y - 10, projectileSpawnPoint.transform.rotation.z);
+            }
         }
+        
     }
 
 }

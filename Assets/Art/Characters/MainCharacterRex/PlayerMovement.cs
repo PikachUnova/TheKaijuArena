@@ -446,7 +446,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void ShootEvent()
     {
-        AudioManager.audioManager.PlaySFX(0);
         shotMuzzle.Shoot();
     }
 
@@ -475,14 +474,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void EnableAttackCollider(int move)
     {
-        Debug.Log("Player Enable Collider" + move);
         AudioManager.audioManager.PlaySFX(3);
         attackTriggers[move-1].GetComponent<Collider>().enabled = true;
     }
 
     public void DisableAttackCollider(int move)
     {
-        Debug.Log("Player Disable Collider"  + move);
         attackTriggers[move-1].GetComponent<Collider>().enabled = false;
     }
 
@@ -528,6 +525,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isFrozen = false;
         this.enabled = true;
+        AudioManager.audioManager.PlaySFX(7);
         if (playerRenderer != null && frozenMaterial != null)
         {
             Material[] currentMats = playerRenderer.materials;

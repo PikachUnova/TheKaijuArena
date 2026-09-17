@@ -12,58 +12,41 @@ public class PlayerShooter : MonoBehaviour
 
     public GameObject ice;
 
-
-    // Prevents overshooting
-    public bool canShoot;
-    public float timeBetweenShots = 0.5f;
-    private float timeUntilNextShot;
-
-    // Projectile types
-    public enum projectileType {fire}
-
     // Muzzles
     public ParticleSystem fireMuzzle;
     public ParticleSystem fireMuzzleHome;
     public ParticleSystem iceMuzzle;
 
-    private AudioSource audioSource;
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         fireMuzzle.GetComponent<ParticleSystem>().Stop();
         fireMuzzleHome.GetComponent<ParticleSystem>().Stop();
         iceMuzzle.GetComponent<ParticleSystem>().Stop();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Time.time > timeUntilNextShot) // The player can shoot once again
-            canShoot = true; 
-    }
-
     public void Shoot()
     {
-        canShoot = false;
-        timeUntilNextShot = Time.time + timeBetweenShots;
         ShootFire();
     }
 
     void ShootFire()
     {
-        int randomFire = Random.Range(1, 2); 
+        int randomFire = Random.Range(1, 3); 
         if (randomFire == 0)
         {
+            AudioManager.audioManager.PlaySFX(0);
             Instantiate(fireHome, this.transform.position, this.transform.rotation);
             fireMuzzleHome.GetComponent<ParticleSystem>().Play();
         }
         else if (randomFire == 1)
         {
+            AudioManager.audioManager.PlaySFX(0);
             Instantiate(fire, this.transform.position, this.transform.rotation);
             fireMuzzle.GetComponent<ParticleSystem>().Play();
         }
         else
         {
+            AudioManager.audioManager.PlaySFX(6);
             Instantiate(ice, this.transform.position, this.transform.rotation);
             iceMuzzle.GetComponent<ParticleSystem>().Play();
         }

@@ -65,7 +65,7 @@ public class PlayerHealth : MonoBehaviour
 
         AudioManager.audioManager.PlayTrack(1);
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");
-        npc.GetComponent<NPCInteractable>().StartCoversationLoss();
+        npc.GetComponent<NPCInteractable>().StartConversationLoss();
     }
 
     public void ResetHealth()

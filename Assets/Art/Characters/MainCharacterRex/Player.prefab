@@ -3170,6 +3170,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5f3a8f02674604b51b690d754cbd8364, type: 3}
   - {fileID: 8300000, guid: 1ea9c54da1cbd4fbbaf667447bf6c4a8, type: 3}
   - {fileID: 8300000, guid: 9cb0c9db67ef9404197730e34f3ffc72, type: 3}
+  - {fileID: 8300000, guid: 23e10b71ec182444c826430d295a1ca7, type: 3}
+  - {fileID: 8300000, guid: cff2b3e163c6645c3941377140f14bbe, type: 3}
+  - {fileID: 8300000, guid: afb6a8c596e0a4d9980e6a467cd14bba, type: 3}
   musicTracks:
   - {fileID: 8300000, guid: e9413e5ec28a84afdbc3c6e2ff3611a5, type: 3}
   - {fileID: 8300000, guid: 8ef25e6b466864281a6d38e9b9efcf1d, type: 3}

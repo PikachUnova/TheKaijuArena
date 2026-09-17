@@ -13,15 +13,19 @@ public class PlayerIceProjectile : BasePlayerProjectile
     {
         if (other.gameObject.CompareTag("Enemy")) // Damage Enemy
         {
-            if (other.GetComponent<EnemyHealth>().currentHealth > attackPower)
+            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            if (enemy.currentHealth <= 0) return; // Do nothing
+
+            if (enemy.currentHealth > attackPower)
                 other.GetComponent<EnemyAI>().Freeze(freezeTime);
             else if (other.GetComponent<EnemyAI>().IsFrozen())
                 other.GetComponent<EnemyAI>().Unfreeze();
 
-            other.GetComponent<EnemyHealth>().TakeDamage(attackPower);
+            enemy.TakeDamage(attackPower);
+            
             if (impact != null)
                 Instantiate(impact, transform.position, transform.rotation);
-            AudioManager.audioManager.PlaySFX(2);
+            AudioManager.audioManager.PlaySFX(8);
             IceParticles();
             Destroy(this.gameObject);
         }
@@ -29,7 +33,7 @@ public class PlayerIceProjectile : BasePlayerProjectile
         {   
             if (impact != null)
                 Instantiate(impact, transform.position, transform.rotation);
-            AudioManager.audioManager.PlaySFX(2);
+            AudioManager.audioManager.PlaySFX(8);
             IceParticles();
             Destroy(this.gameObject);
         }

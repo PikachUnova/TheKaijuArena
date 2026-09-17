@@ -1,15 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using DialogueEditor;
 using UnityEngine.UI;
 using TMPro;
 
 public class CombatLevelSelector : MonoBehaviour
 {
     public static CombatLevelSelector levelSelector;
-
-    public NPCConversation conversation;
 
     private int currentLevel = 0;
 
@@ -40,9 +37,10 @@ public class CombatLevelSelector : MonoBehaviour
 
     private IEnumerator StartLevel(CombatLevelData data)
     {
-        ConversationManager.Instance.StartConversation(conversation);
+        GameObject npc = GameObject.FindWithTag("NPC");
+        npc.GetComponent<NPCInteractable>().StartConversationPrepareBattle(true);
         yield return new WaitForSeconds(2f);
-        ConversationManager.Instance.EndConversation();
+        npc.GetComponent<NPCInteractable>().StartConversationPrepareBattle(false);
 
         CombatManager.combatManager.SetCombatLevel(data);
         CombatManager.combatManager.StartCombat();
@@ -51,7 +49,8 @@ public class CombatLevelSelector : MonoBehaviour
 
     public void UnlockLevel()
     {
-        currentLevel++;
+        if (currentLevel <= 10) // Up to a Max Level
+            currentLevel++;
         buttons[(currentLevel - 1) % buttons.Length].interactable = true;
     }
 

@@ -35,11 +35,6 @@ public class EnemyHealth : MonoBehaviour
         if (victim.IsFrozen())
             victim.Unfreeze();
         
-        this.GetComponent<CapsuleCollider>().enabled = false;
-        this.GetComponent<CapsuleCollider>().isTrigger = false;
-        this.GetComponent<CapsuleCollider>().direction = 2;
-        //this.GetComponent<CapsuleCollider>().center = new Vector3(0f, 0.4f, 0f);
-        
         victim.OnDeath();
         animator.Play("Death");
 

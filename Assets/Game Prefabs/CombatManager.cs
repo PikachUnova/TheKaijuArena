@@ -183,7 +183,7 @@ public class CombatManager : MonoBehaviour
         AudioManager.audioManager.PlayTrack(1);
 
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");
-        npc.GetComponent<NPCInteractable>().StartCoversationWin();
+        npc.GetComponent<NPCInteractable>().StartConversationWin();
     }
 
 }

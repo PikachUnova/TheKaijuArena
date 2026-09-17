@@ -27,7 +27,6 @@ public class PteraAI : EnemyAI
         StartCoroutine(Idle());
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isBusy || !isFlying) return;
@@ -136,9 +135,7 @@ public class PteraAI : EnemyAI
         while (elapsedTime < 1.5f)
         {
             transform.position += transform.forward * dashSpeed * Time.deltaTime;
-
             elapsedTime += Time.deltaTime;
-
             yield return null;
         }
         DisableAttackCollider(2);

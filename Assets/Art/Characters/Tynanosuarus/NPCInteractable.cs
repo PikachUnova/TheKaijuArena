@@ -5,9 +5,9 @@ using DialogueEditor;
 public class NPCInteractable : MonoBehaviour
 {
     private GameObject player;
-    public GameObject combatManager;
 
     public NPCConversation conversation;
+    public NPCConversation conversationStartBattle;
     public NPCConversation conversationWin;
     public NPCConversation conversationLoss;
 
@@ -68,13 +68,21 @@ public class NPCInteractable : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
-    public void StartCoversationWin()
+    public void StartConversationWin()
     {
         ConversationManager.Instance.StartConversation(conversationWin);
     }
-    public void StartCoversationLoss()
+    public void StartConversationLoss()
     {
         ConversationManager.Instance.StartConversation(conversationLoss);
+    }
+
+    public void StartConversationPrepareBattle(bool b)
+    {
+        if (b)
+            ConversationManager.Instance.StartConversation(conversationStartBattle);
+        else
+            ConversationManager.Instance.EndConversation();
     }
 
     private void OnEnable()

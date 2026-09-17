@@ -42,7 +42,13 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float backJumpDistance = 6f;
     [SerializeField] private float backJumpHeight = 1.5f;
     [SerializeField] private float backJumpDuration = 0.5f;
-
+/*
+    [Header("Ground Test")]    
+    [SerializeField] protected float groundCheckRadius = 0.3f;
+    [SerializeField] protected float GroundedOffset = 0.25f;
+    [SerializeField] public LayerMask groundLayer;
+    [SerializeField] protected bool isGrounded = true;
+*/
     [Header("Freeze Effect")]
     [SerializeField] private Renderer enemyRenderer;
     [SerializeField] private Material originalMaterial;
@@ -57,7 +63,7 @@ public class EnemyAI : MonoBehaviour
 
     protected virtual void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         agent.speed = movementSpeed;
 
@@ -97,18 +103,18 @@ public class EnemyAI : MonoBehaviour
                 rb.isKinematic = false; // Turn off Kinematic so forces apply
                 rb.useGravity = true;
                 rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                
             }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (currentState == EnemyState.Defeated && collision.gameObject.layer == LayerMask.NameToLayer("Grass"))
+        if (currentState == EnemyState.Defeated && other.gameObject.layer == LayerMask.NameToLayer("Grass"))
         {
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.linearVelocity = Vector3.zero;
                 rb.isKinematic = true;
             }
         }
@@ -147,6 +153,7 @@ public class EnemyAI : MonoBehaviour
         float elapsedTime = 0f;
 
         animator.Play("Jump");
+        fallOnDefeat = true;
 
         while (elapsedTime < backJumpDuration)
         {
@@ -167,6 +174,7 @@ public class EnemyAI : MonoBehaviour
 
         agent.Warp(transform.position);
         currentState = EnemyState.Chase;
+        fallOnDefeat = false;
         agent.isStopped = false;
     }
 
@@ -234,6 +242,7 @@ public class EnemyAI : MonoBehaviour
         agent.isStopped = false;
         animator.enabled = true;
         currentState = EnemyState.Chase;
+        AudioManager.audioManager.PlaySFX(7);
         if (enemyRenderer != null && frozenMaterial != null)
         {
             Material[] currentMats = enemyRenderer.materials;
