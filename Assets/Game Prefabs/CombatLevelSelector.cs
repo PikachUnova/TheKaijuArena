@@ -23,7 +23,6 @@ public class CombatLevelSelector : MonoBehaviour
             return;
         }
         levelSelector = this;
-        DontDestroyOnLoad(this);
 
         for (int i = 0; i < buttons.Length; i++)
             buttons[i].interactable = false;

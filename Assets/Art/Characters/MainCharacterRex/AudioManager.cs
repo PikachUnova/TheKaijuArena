@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
         }
         audioManager = this;
         DontDestroyOnLoad(this);
-        PlayTrack(1);
+        PlayTrack(0);
     }
 
     public void PlaySFX(int index)

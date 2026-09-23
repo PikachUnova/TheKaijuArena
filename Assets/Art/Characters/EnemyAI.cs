@@ -22,6 +22,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] protected Transform player;
     [SerializeField] protected Transform projectileSpawnPoint;
     [SerializeField] protected GameObject fire;
+    [SerializeField] protected ParticleSystem fireMuzzle;
     [SerializeField] protected Collider [] attackTriggers;
 
     protected NavMeshAgent agent;
@@ -42,13 +43,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float backJumpDistance = 6f;
     [SerializeField] private float backJumpHeight = 1.5f;
     [SerializeField] private float backJumpDuration = 0.5f;
-/*
-    [Header("Ground Test")]    
-    [SerializeField] protected float groundCheckRadius = 0.3f;
-    [SerializeField] protected float GroundedOffset = 0.25f;
-    [SerializeField] public LayerMask groundLayer;
-    [SerializeField] protected bool isGrounded = true;
-*/
+
     [Header("Freeze Effect")]
     [SerializeField] private Renderer enemyRenderer;
     [SerializeField] private Material originalMaterial;
@@ -69,6 +64,9 @@ public class EnemyAI : MonoBehaviour
 
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (fireMuzzle != null)
+            fireMuzzle.GetComponent<ParticleSystem>().Stop();
     }
 
     protected void StopWhenPlayerBeaten()
@@ -175,7 +173,9 @@ public class EnemyAI : MonoBehaviour
         agent.Warp(transform.position);
         currentState = EnemyState.Chase;
         fallOnDefeat = false;
-        agent.isStopped = false;
+
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
     }
 
     public int GetAttackPower()
@@ -239,7 +239,8 @@ public class EnemyAI : MonoBehaviour
         isFrozen = false;
         this.enabled = true;
         agent.speed = movementSpeed;
-        agent.isStopped = false;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
         animator.enabled = true;
         currentState = EnemyState.Chase;
         AudioManager.audioManager.PlaySFX(7);

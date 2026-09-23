@@ -577,6 +577,7 @@ MonoBehaviour:
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
   fire: {fileID: 0}
+  fireMuzzle: {fileID: 0}
   attackTriggers:
   - {fileID: 5362790118957688465}
   - {fileID: 597828645596267474}
@@ -592,7 +593,7 @@ MonoBehaviour:
   enemyRenderer: {fileID: 1712321657882018203, guid: 151202e851d0e4d9b9dcd79917bf9d96, type: 3}
   originalMaterial: {fileID: 2100000, guid: b16d6e275a9ee497f817bcbfccb5c4a8, type: 2}
   frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
-  freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
+  freezeEffect: {fileID: 0}
   fallOnDefeat: 0
   rollRange: 20
   rollSpeed: 20

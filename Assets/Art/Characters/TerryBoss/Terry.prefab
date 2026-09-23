@@ -689,6 +689,7 @@ MonoBehaviour:
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 3190203453090976415, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
   fire: {fileID: 5412969114349314706, guid: bd876556b532e482eb725abd3c8398e0, type: 3}
+  fireMuzzle: {fileID: 0}
   attackTriggers:
   - {fileID: 64748704447231984}
   - {fileID: 6026454422900273481}
@@ -704,7 +705,7 @@ MonoBehaviour:
   enemyRenderer: {fileID: 3986319257805000853, guid: 20890cdde6e594c7d90606de400016c9, type: 3}
   originalMaterial: {fileID: 2100000, guid: 8156734c1caf744d78033dd294352c2e, type: 2}
   frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
-  freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
+  freezeEffect: {fileID: 0}
   fallOnDefeat: 1
   flightHeight: 3
   flightSpeed: 5

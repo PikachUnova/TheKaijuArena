@@ -20,7 +20,6 @@ public class NPCInteractable : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(isTalking)
@@ -71,44 +70,42 @@ public class NPCInteractable : MonoBehaviour
     public void StartConversationWin()
     {
         ConversationManager.Instance.StartConversation(conversationWin);
+        isTalking = true;
+        player.GetComponent<PlayerMovement>().enabled = false;
     }
     public void StartConversationLoss()
     {
         ConversationManager.Instance.StartConversation(conversationLoss);
+        isTalking = true;
+        player.GetComponent<PlayerMovement>().enabled = false;
     }
 
     public void StartConversationPrepareBattle(bool b)
     {
         if (b)
+        {
             ConversationManager.Instance.StartConversation(conversationStartBattle);
+            isTalking = true;
+            player.GetComponent<PlayerMovement>().enabled = false;
+        }
         else
             ConversationManager.Instance.EndConversation();
     }
 
     private void OnEnable()
     {
-        // Subscribe to the end conversation event
         ConversationManager.OnConversationEnded += MyEndEventMethod;
     }
 
     private void OnDisable()
     {
-        // Always unsubscribe when the object is disabled/destroyed
         ConversationManager.OnConversationEnded -= MyEndEventMethod;
     }
 
     private void MyEndEventMethod()
     {
-        if (!CombatLevelSelector.levelSelector.gameObject.activeSelf)
-        {
-            isTalking = false;
-            player.GetComponent<PlayerMovement>().enabled = true;
-        }/*
-        else
-        {
-            CombatLevelSelector.levelSelector.gameObject.SetActive(true);
-            Debug.Log("Your conversation has ended!");
-        }*/
+        isTalking = false;
+        player.GetComponent<PlayerMovement>().enabled = true;
     }
 
 }

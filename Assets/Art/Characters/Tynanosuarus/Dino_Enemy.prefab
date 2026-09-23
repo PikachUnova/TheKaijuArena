@@ -821,6 +821,7 @@ MonoBehaviour:
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 8148204454145412617}
   fire: {fileID: 8053896815298010388, guid: 5b8451db9af32423bb6b9cf08743112d, type: 3}
+  fireMuzzle: {fileID: 274153778492359185, guid: 40465dd4ddce14b879fff9e0d6db5ad9, type: 3}
   attackTriggers:
   - {fileID: 944732679676378701}
   - {fileID: 0}
@@ -836,17 +837,12 @@ MonoBehaviour:
   enemyRenderer: {fileID: 8223914148737027600}
   originalMaterial: {fileID: 2100000, guid: c418fad2df80c45209b14bdbf3d730db, type: 2}
   frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
-  freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
+  freezeEffect: {fileID: 0}
   fallOnDefeat: 0
-  groundCheckRadius: 0.3
-  GroundedOffset: 0.25
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  isGrounded: 1
   shootCooldown: 2
   aimDuration: 0.5
-  numberOfShots: 1
+  minNumberOfShots: 1
+  maxNumberOfShots: 3
 --- !u!54 &5787269997678755860
 Rigidbody:
   m_ObjectHideFlags: 0

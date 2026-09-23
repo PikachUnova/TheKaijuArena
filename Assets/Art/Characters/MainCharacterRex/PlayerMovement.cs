@@ -162,6 +162,12 @@ public class PlayerMovement : MonoBehaviour
         }
         OnSlopeSliding(); // Interact or Slide on steep surfaces
 
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ShootUp"))
+            SetWeight(0.0f);
+        else
+            SetWeight(1.0f);
+
+
     }
 
     private void Move() // Move the player by changing position and/or angle
@@ -244,7 +250,6 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y = jumpHeight;
                 jumpHoldTime = 0.2f;
             }
-            
         }
         
         if (m_jumpAction.IsPressed() && jumpHoldTime > 0) // GetButton
@@ -457,30 +462,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void SetWeight()
+    public void SetWeight(float value)
     {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Defeated"))
-        {
-            var data = aimConstraint.data;
-            WeightedTransformArray sources = data.sourceObjects;
+        var data = aimConstraint.data;
+        WeightedTransformArray sources = data.sourceObjects;
 
-            var firstSource = sources.GetTransform(0);
-            sources.SetWeight(0, 0.0f); // Set weight
+        var firstSource = sources.GetTransform(0);
+        sources.SetWeight(0, value); // Set weight
 
-            data.sourceObjects = sources;
-            aimConstraint.data = data;
-        }
+        data.sourceObjects = sources;
+        aimConstraint.data = data;
     }
 
     public void EnableAttackCollider(int move)
     {
         AudioManager.audioManager.PlaySFX(3);
+        SetWeight(0.0f);
         attackTriggers[move-1].GetComponent<Collider>().enabled = true;
     }
 
     public void DisableAttackCollider(int move)
     {
+        SetWeight(1.0f);
         attackTriggers[move-1].GetComponent<Collider>().enabled = false;
+    }
+
+    void ShootUpward()
+    {
+        shotMuzzle.ShootUpward();
+    }
+    void RainDown()
+    {
+        StartCoroutine(shotMuzzle.RainDown(this.transform));
     }
 
     public void Freeze(float time)

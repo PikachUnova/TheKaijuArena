@@ -9,11 +9,19 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip menuSoundtrack;
 
+    private int slotNumber = 1;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot(menuSoundtrack);
     }
+
+    public void TempSaveGame()
+    {
+        //SceneManager.Instance.SaveGame(slotNumber);
+    }
+
 
     public void Play()
     {

@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Spawn Points")]
     public static EnemySpawner Instance { get; private set; }
     [SerializeField] private Transform[] spawnPoints;
-    public int enemiesLeft = 0;
+    public int enemiesLeft;
 
     private void Start()
     {
@@ -37,18 +37,12 @@ public class EnemySpawner : MonoBehaviour
 
     public void ClearEnemies()
     {
-        StartCoroutine(Clear());
-    }
-
-    private IEnumerator Clear()
-    {
-        yield return new WaitForSeconds(2.5f);
-
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
             Destroy(enemy);
         }
+        enemiesLeft = 0;
     }
     
 }

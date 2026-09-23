@@ -36,8 +36,11 @@ public class DinoAI : EnemyAI
             case EnemyState.Chase:
 
                 shootTimer += Time.deltaTime;
-                agent.isStopped = false;
-                agent.SetDestination(player.position);
+                if (agent.enabled && agent.isOnNavMesh)    
+                {            
+                    agent.isStopped = false;
+                    agent.SetDestination(player.position);
+                }
                 SetMovement(0.5f);
 
                 if (distance <= attackRange)
@@ -52,7 +55,7 @@ public class DinoAI : EnemyAI
         }
     }
 
-    void MeleeAttack()
+    protected void MeleeAttack()
     {
         StartCoroutine(AttackRoutine());
     }
@@ -62,7 +65,8 @@ public class DinoAI : EnemyAI
         isBusy = true;
         currentState = EnemyState.Attack;
 
-        agent.isStopped = true;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = true;
         SetMovement(0f);
 
         animator.Play("Attack");
@@ -76,7 +80,9 @@ public class DinoAI : EnemyAI
         }
         else
         {
-            agent.isStopped = true;
+            if (agent.enabled && agent.isOnNavMesh)
+                agent.isStopped = true;
+
             SetMovement(0f);
             currentState = EnemyState.Chase;
             while (true)
@@ -99,7 +105,7 @@ public class DinoAI : EnemyAI
         isBusy = false;
     }
 
-    void RangedAttack()
+    protected void RangedAttack()
     {
         StartCoroutine(RangedAttackRoutine());
     }
@@ -109,7 +115,8 @@ public class DinoAI : EnemyAI
         isBusy = true;
         currentState = EnemyState.Shoot;
 
-        agent.isStopped = true;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = true;
         SetMovement(0f);
 
         int numShots = Random.Range(minNumberOfShots, maxNumberOfShots + 1);
@@ -127,7 +134,8 @@ public class DinoAI : EnemyAI
 
         // Chase again
         currentState = EnemyState.Chase;
-        agent.isStopped = false;
+        if (agent.enabled && agent.isOnNavMesh)
+            agent.isStopped = false;
         isBusy = false;
         shootTimer = 0;
     }
@@ -138,6 +146,8 @@ public class DinoAI : EnemyAI
         if (fire != null && projectileSpawnPoint != null)
         {
             AudioManager.audioManager.PlaySFX(0);
+            if (fireMuzzle != null)
+            fireMuzzle.GetComponent<ParticleSystem>().Play();
 
             if (!tripleShot)
             {

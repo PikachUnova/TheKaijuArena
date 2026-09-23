@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -23,7 +24,9 @@ public class PlayerHealth : MonoBehaviour
 
         UIHandler.handler.health -= damage;
         currentHealth -= damage;
+        this.GetComponent<PlayerMovement>().SetWeight(0.0f);
         animator.Play("Hurt");
+        this.GetComponent<PlayerMovement>().SetWeight(1.0f);
 
         if (currentHealth <= 0)
         {
@@ -38,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
         PlayerMovement victim = gameObject.GetComponent<PlayerMovement>();
         if (victim.IsFrozen())
             victim.Unfreeze();
-        
+        this.GetComponent<PlayerMovement>().SetWeight(0.0f);
         animator.Play("Death");
         isDefeated = true;
     }
@@ -53,15 +56,26 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(2f);
         UIHandler.handler.FadeOut();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
 
         animator.SetTrigger("Revive");
-        SetPlayerTransformation(savePoint);
+        this.GetComponent<PlayerMovement>().SetWeight(1.0f);
 
+        CharacterController controller = this.GetComponent<CharacterController>();
+        if (controller != null) // Prevent player hitting the wall or obstacle
+        {
+            controller.enabled = false;
+            SetPlayerTransformation(savePoint);
+            controller.enabled = true;
+        }
+
+        CombatManager.combatManager.ClearArena();
+        
         yield return new WaitForSeconds(1f);
         UIHandler.handler.FadeIn();
         isDefeated = false;
         ResetHealth();
+        
 
         AudioManager.audioManager.PlayTrack(1);
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");

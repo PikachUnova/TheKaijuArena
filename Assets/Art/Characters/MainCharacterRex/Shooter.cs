@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class PlayerShooter : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Projectiles
     public GameObject fire;
     public GameObject fireHome;
-
     public GameObject ice;
 
     // Muzzles
@@ -29,9 +27,31 @@ public class PlayerShooter : MonoBehaviour
         ShootFire();
     }
 
+    public void ShootUpward()
+    {
+        if (fire != null)
+        {
+            AudioManager.audioManager.PlaySFX(0);
+            GameObject projectile = Instantiate(fire, this.transform.position, this.transform.rotation);
+        }
+    }
+    public IEnumerator RainDown(Transform objectPos)
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            GameObject projectile;
+            Vector3 abovePlayerTransform = new Vector3(objectPos.position.x + Random.Range(-10.0f, 10.0f), 
+                objectPos.position.y + 20f, 
+                objectPos.position.z + Random.Range(-10.0f, 10.0f));
+            projectile = Instantiate(fire, abovePlayerTransform, objectPos.rotation);
+            projectile.transform.Rotate(fire.transform.rotation.x + 90, fire.transform.rotation.y, fire.transform.rotation.z);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     void ShootFire()
     {
-        int randomFire = Random.Range(1, 3); 
+        int randomFire = Random.Range(1, 2); 
         if (randomFire == 0)
         {
             AudioManager.audioManager.PlaySFX(0);

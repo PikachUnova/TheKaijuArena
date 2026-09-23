@@ -36,7 +36,6 @@ public class CombatManager : MonoBehaviour
             return;
         }
         combatManager = this;
-        DontDestroyOnLoad(this);
     }
 
     public void StartCombat()
@@ -58,12 +57,12 @@ public class CombatManager : MonoBehaviour
         {
             AudioManager.audioManager.StopMusic();
             AudioManager.audioManager.PlaySFX(5);
-            player.GetComponent<PlayerHealth>().Respawn();
             currentWave = 0;
             hasStarted = false;
             levelComplete = false;
             combatText.text = "";
-            enemySpawner.ClearEnemies();
+            player.GetComponent<PlayerHealth>().Respawn();
+            return;
         }
         else if (IsLevelComplete())
         {
@@ -184,6 +183,11 @@ public class CombatManager : MonoBehaviour
 
         GameObject npc = GameObject.FindGameObjectWithTag("NPC");
         npc.GetComponent<NPCInteractable>().StartConversationWin();
+    }
+
+    public void ClearArena()
+    {
+        enemySpawner.ClearEnemies();
     }
 
 }
