@@ -8,13 +8,12 @@ using System.IO;
 
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager Instance {get; set;}
+    public static SaveManager Instance { get; set; }
+    public SaveData saveData;
 
     string jsonPathProject;
     string jsonPathPersistant;
     string binaryPath; 
-    
-    string fileName = "SaveGame";
     
     public bool isSavingJson;
     public bool isLoading;
@@ -29,7 +28,6 @@ public class SaveManager : MonoBehaviour
         
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        //SaveData = new SaveData();
     }
     
     private void Start()

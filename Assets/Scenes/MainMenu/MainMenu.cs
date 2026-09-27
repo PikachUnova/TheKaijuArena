@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -9,22 +10,34 @@ public class MainMenu : MonoBehaviour
 
     public AudioClip menuSoundtrack;
 
-    private int slotNumber = 1;
-
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot(menuSoundtrack);
     }
 
-    public void TempSaveGame()
-    {
-        //SceneManager.Instance.SaveGame(slotNumber);
-    }
-
-
     public void Play()
     {
+        StartCoroutine(DelayPlay(3f));
+    }
+
+    private IEnumerator DelayPlay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Debug.Log("Loaded Game");
+        SceneManager.LoadScene("Rex'sHouse");
+    }
+
+    public void PlayNewGame()
+    {
+        StartCoroutine(DelayPlayNewGame(3f));
+    }
+
+    private IEnumerator DelayPlayNewGame(float time)
+    {
+        yield return new WaitForSeconds(time);
+        SaveManager.Instance.saveData.ResetSaveData();
+        Debug.Log("New Game Started");
         SceneManager.LoadScene("Rex'sHouse");
     }
 

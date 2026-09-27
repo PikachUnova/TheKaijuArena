@@ -7,8 +7,9 @@ using TMPro;
 public class CombatLevelSelector : MonoBehaviour
 {
     public static CombatLevelSelector levelSelector;
-
-    private int currentLevel = 0;
+    public CharacterStats stats;
+    
+    private int currentLevel;
 
     public Button[] buttons;
 
@@ -24,9 +25,9 @@ public class CombatLevelSelector : MonoBehaviour
         }
         levelSelector = this;
 
-        for (int i = 0; i < buttons.Length; i++)
+        currentLevel = SaveManager.Instance.saveData.currentLevel;
+        for (int i = currentLevel + 1; i < buttons.Length; i++)
             buttons[i].interactable = false;
-        UnlockLevel();
     }
 
     public void SelectLevel(CombatLevelData data)
@@ -49,8 +50,18 @@ public class CombatLevelSelector : MonoBehaviour
     public void UnlockLevel()
     {
         if (currentLevel <= 10) // Up to a Max Level
+        {
             currentLevel++;
-        buttons[(currentLevel - 1) % buttons.Length].interactable = true;
+            SaveManager.Instance.saveData.currentLevel++;
+        }
+        buttons[currentLevel % buttons.Length].interactable = true;
+
+        if(currentLevel == 2 || currentLevel == 4 || currentLevel == 6)
+        {
+            stats.skills++;
+            SaveManager.Instance.saveData.playerSkills++;
+            Debug.Log("New Skill");
+        }
     }
 
     public int GetCurrentLevel()

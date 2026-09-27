@@ -2,13 +2,18 @@
 public class SaveData
 {
     public int currentLevel;
-
-    public int playerHealth;
     public int playerMaxHealth;
 
-    public float playerX;
-    public float playerY;
-    public float playerZ;
+    public int playerAttackPower;
+    public int playerSkills;
 
-    public string sceneName;
+
+    public void ResetSaveData()
+    {
+        currentLevel = 0;
+        playerMaxHealth = 100;
+        playerAttackPower = 5;
+        playerSkills = 0;
+        
+    }
 }
