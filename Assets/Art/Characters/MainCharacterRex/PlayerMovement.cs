@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     public CinemachineCamera freeLookCamera;  // Reference to the FreeLook Camera
     public CinemachineCamera TPCamera;  // Reference to the Virtual Camera
     private bool isAiming = false;
+    private bool isUsingSpecial = false;
     public MultiAimConstraint aimConstraint;
     public Transform lookTarget;
 
@@ -64,6 +65,9 @@ public class PlayerMovement : MonoBehaviour
     private InputAction m_talkAction;
     private InputAction m_dodgeAction;
     private InputAction m_attackAction;
+    private InputAction m_specialAttackAction;
+    private InputAction m_switchAction;
+
 
     [Header("Freeze Effect")]
     [SerializeField] private Renderer playerRenderer;
@@ -97,6 +101,8 @@ public class PlayerMovement : MonoBehaviour
         m_talkAction = InputSystem.actions.FindAction("Talk");
         m_dodgeAction = InputSystem.actions.FindAction("Dodge");
         m_attackAction= InputSystem.actions.FindAction("Attack");
+        m_specialAttackAction = InputSystem.actions.FindAction("SpecialAttack");
+        m_switchAction= InputSystem.actions.FindAction("Switch");
 
     }
 
@@ -116,7 +122,15 @@ public class PlayerMovement : MonoBehaviour
                 animator.Play("Shoot");
             else if (m_attackAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // Melee Attack
                 animator.Play("Attack");
+            
+            if (m_switchAction.WasPressedThisFrame()) // Switch Projectile
+                Switch();
 
+            if (m_specialAttackAction.WasPressedThisFrame()) // Unleash Special Attack
+            {
+                animator.Play("ShootUp");
+                isUsingSpecial = true;
+            }
             
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                     transform.position.z);
@@ -151,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded) // Speed does not change when midair
         {
-            if (isRunning) // Adjust speed when walking or running
+            if (isRunning && !isAiming) // Adjust speed when walking or running
             {
                 moveSpeed = runSpeed;
             }
@@ -162,12 +176,12 @@ public class PlayerMovement : MonoBehaviour
         }
         OnSlopeSliding(); // Interact or Slide on steep surfaces
 
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ShootUp"))
+        if (isUsingSpecial)
+        {
             SetWeight(0.0f);
+        }
         else
             SetWeight(1.0f);
-
-
     }
 
     private void Move() // Move the player by changing position and/or angle
@@ -325,7 +339,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!IsMoving())
             SetLocomotive(0f);
-        else if (IsMoving() && !isRunning)
+        else if ((IsMoving() && !isRunning) || isAiming)
             SetLocomotive(0.5f);
         else
             SetLocomotive(1f);
@@ -454,6 +468,11 @@ public class PlayerMovement : MonoBehaviour
         shotMuzzle.Shoot();
     }
 
+    private void Switch()
+    {
+        shotMuzzle.SwitchProjectile();
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("NPC") && m_talkAction.IsPressed())
@@ -494,6 +513,7 @@ public class PlayerMovement : MonoBehaviour
     void RainDown()
     {
         StartCoroutine(shotMuzzle.RainDown(this.transform));
+        isUsingSpecial = false;
     }
 
     public void Freeze(float time)
