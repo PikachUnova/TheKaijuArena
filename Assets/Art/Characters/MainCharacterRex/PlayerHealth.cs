@@ -22,16 +22,17 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
             return;
 
-        UIHandler.handler.health -= damage;
+        UIHandler.handler.SetHP(UIHandler.handler.GetHP() - damage);
         currentHealth -= damage;
         this.GetComponent<PlayerMovement>().SetWeight(0.0f);
         animator.Play("Hurt");
         this.GetComponent<PlayerMovement>().SetWeight(1.0f);
+        UIHandler.handler.UpdateSpecialPoints(1);
 
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            UIHandler.handler.health = 0;
+            UIHandler.handler.SetHP(0);
             Faint();
         }
     }
@@ -85,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
     public void ResetHealth()
     {
         currentHealth = stats.maxHealth;
-        UIHandler.handler.health = stats.maxHealth;
+        UIHandler.handler.SetHP(stats.maxHealth);
     }
 
     public void SetPlayerTransformation(Vector3 point)

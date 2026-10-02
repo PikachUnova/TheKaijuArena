@@ -482,11 +482,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -6597728271814895883}
   m_SourcePrefab: {fileID: 100100000, guid: 1b07657b4d6944ad0976650065258b9f, type: 3}
---- !u!137 &3986319257805000853 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -2076306930648356465, guid: 1b07657b4d6944ad0976650065258b9f, type: 3}
-  m_PrefabInstance: {fileID: 6088085933171800346}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5198817259387255331 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2042612395594187577, guid: 1b07657b4d6944ad0976650065258b9f, type: 3}
@@ -613,11 +608,8 @@ MonoBehaviour:
   backJumpDistance: 6
   backJumpHeight: 1.5
   backJumpDuration: 0.5
-  enemyRenderer: {fileID: 3986319257805000853}
-  originalMaterial: {fileID: 2100000, guid: 8156734c1caf744d78033dd294352c2e, type: 2}
-  frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
-  freezeEffect: {fileID: 0}
   fallOnDefeat: 1
+  frozenMaterial: {fileID: 2100000, guid: 5d90c5e6d79924629ad2b4507de2160a, type: 2}
   flightHeight: 3
   flightSpeed: 5
   shootCooldown: 3

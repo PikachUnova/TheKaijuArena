@@ -836,8 +836,7 @@ MonoBehaviour:
   backJumpDuration: 0.5
   enemyRenderer: {fileID: 8223914148737027600}
   originalMaterial: {fileID: 2100000, guid: c418fad2df80c45209b14bdbf3d730db, type: 2}
-  frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
-  freezeEffect: {fileID: 0}
+  frozenMaterial: {fileID: 2100000, guid: 5d90c5e6d79924629ad2b4507de2160a, type: 2}
   fallOnDefeat: 0
   shootCooldown: 2
   aimDuration: 0.5

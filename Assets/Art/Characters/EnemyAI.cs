@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Linq;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -44,17 +45,17 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float backJumpHeight = 1.5f;
     [SerializeField] private float backJumpDuration = 0.5f;
 
-    [Header("Freeze Effect")]
-    [SerializeField] private Renderer enemyRenderer;
-    [SerializeField] private Material originalMaterial;
-    [SerializeField] private Material frozenMaterial;
-    public GameObject freezeEffect; // Visual effect for freezing
-    private bool isFrozen = false;
-
     [Header("States")]
     protected EnemyState currentState = EnemyState.Idle;
     protected bool isBusy;
     [SerializeField] protected bool fallOnDefeat = false;
+
+    [Header("Freeze Effect")]
+    private Renderer[] renderers;
+    private Renderer[] filteredRenderers;
+    private Material[] originalMaterials;
+    [SerializeField] private Material frozenMaterial;
+    private bool isFrozen = false;
 
     protected virtual void Start()
     {
@@ -67,6 +68,20 @@ public class EnemyAI : MonoBehaviour
 
         if (fireMuzzle != null)
             fireMuzzle.GetComponent<ParticleSystem>().Stop();
+
+        // Find all Renderers excluding particle system
+        renderers = GetComponentsInChildren<Renderer>(true);
+        filteredRenderers = renderers
+        .Where(r => r.GetComponent<ParticleSystem>() == null)
+        .ToArray();
+        originalMaterials = new Material[filteredRenderers.Length];
+
+        int i = 0;
+        foreach(Renderer rend in filteredRenderers)
+        {
+            originalMaterials[i] = rend.material;
+            i++;
+        }
     }
 
     protected void StopWhenPlayerBeaten()
@@ -200,19 +215,9 @@ public class EnemyAI : MonoBehaviour
         // No change if already frozen
         if (isFrozen) return;
 
-        if (freezeEffect != null)
-            Instantiate(freezeEffect, this.transform.position, this.transform.rotation);
-
-        if (enemyRenderer != null && frozenMaterial != null)
+        foreach (Renderer renderer in filteredRenderers)
         {
-            Material[] currentMats = enemyRenderer.materials;
-            Material[] newMats = new Material[currentMats.Length + 1];
-
-            for (int i = 0; i < currentMats.Length; i++)
-                newMats[i] = currentMats[i];
-            
-            newMats[newMats.Length - 1] = frozenMaterial;
-            enemyRenderer.materials = newMats;
+            renderer.material = frozenMaterial;
         }
         
         this.enabled = false;
@@ -243,15 +248,13 @@ public class EnemyAI : MonoBehaviour
             agent.isStopped = false;
         animator.enabled = true;
         currentState = EnemyState.Chase;
-        AudioManager.audioManager.PlaySFX(7);
-        if (enemyRenderer != null && frozenMaterial != null)
-        {
-            Material[] currentMats = enemyRenderer.materials;
-            Material[] newMats = new Material[currentMats.Length - 1];
 
-            newMats[0] = currentMats[0];
-            newMats[0] = originalMaterial;
-            enemyRenderer.materials = newMats;
+        AudioManager.audioManager.PlaySFX(7);
+        int i = 0;
+        foreach (Renderer rend in filteredRenderers)
+        {
+            rend.material = originalMaterials[i];
+            i++;
         }
         isBusy = false;
     }

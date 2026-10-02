@@ -17,8 +17,10 @@ public class PlayerMeleeAttack : MonoBehaviour
             if (enemy.currentHealth <= 0) return; // Do nothing
 
             if (enemy != null)
+            {
                 enemy.TakeDamage(stats.attackPower);
-            
+                UIHandler.handler.UpdateSpecialPoints(1);
+            }
 
             if (other.GetComponent<EnemyAI>().IsFrozen())
                 return;

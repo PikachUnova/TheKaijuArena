@@ -364,6 +364,7 @@ MonoBehaviour:
   player: {fileID: 0}
   projectileSpawnPoint: {fileID: 0}
   fire: {fileID: 0}
+  fireMuzzle: {fileID: 0}
   attackTriggers:
   - {fileID: 6032487893374197148}
   - {fileID: 3392029728272051915}
@@ -376,11 +377,8 @@ MonoBehaviour:
   backJumpDistance: 6
   backJumpHeight: 1.5
   backJumpDuration: 0.5
-  enemyRenderer: {fileID: 1712321657882018203}
-  originalMaterial: {fileID: 2100000, guid: b16d6e275a9ee497f817bcbfccb5c4a8, type: 2}
-  frozenMaterial: {fileID: 2100000, guid: 2aef716eb7ab04ddf90b5d7711059020, type: 2}
-  freezeEffect: {fileID: 4845747545959293434, guid: b99e4740133f7458b8808eb67b6f0e9e, type: 3}
   fallOnDefeat: 0
+  frozenMaterial: {fileID: 2100000, guid: 5d90c5e6d79924629ad2b4507de2160a, type: 2}
   rollRange: 20
   rollSpeed: 20
   rollDuration: 2
@@ -412,11 +410,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
---- !u!137 &1712321657882018203 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7734070860804627948, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
-  m_PrefabInstance: {fileID: 245566021447869327}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7885849737594354664 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1290203842161059737, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}

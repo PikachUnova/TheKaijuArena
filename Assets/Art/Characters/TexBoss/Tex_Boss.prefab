@@ -1207,11 +1207,8 @@ MonoBehaviour:
   backJumpDistance: 6
   backJumpHeight: 1.5
   backJumpDuration: 0.5
-  enemyRenderer: {fileID: 0}
-  originalMaterial: {fileID: 0}
-  frozenMaterial: {fileID: 0}
-  freezeEffect: {fileID: 0}
   fallOnDefeat: 0
+  frozenMaterial: {fileID: 2100000, guid: 5d90c5e6d79924629ad2b4507de2160a, type: 2}
   shootCooldown: 5
   aimDuration: 0.5
   minNumberOfShots: 1
@@ -1413,6 +1410,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3672255334526010521, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3672255334526010521, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
       propertyPath: emitterVelocityMode
       value: 0
       objectReference: {fileID: 0}
@@ -1490,7 +1491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4394157874478540986, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
       propertyPath: m_Name
-      value: FireBreath
+      value: Tex'sFireBreath
       objectReference: {fileID: 0}
     - target: {fileID: 4394157874478540986, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
       propertyPath: m_IsActive
@@ -1571,7 +1572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 4
   damageCooldown: 0.25
-  player: {fileID: 0}
+  isEnemyAttack: 1
 --- !u!65 &4505386309409074169
 BoxCollider:
   m_ObjectHideFlags: 0

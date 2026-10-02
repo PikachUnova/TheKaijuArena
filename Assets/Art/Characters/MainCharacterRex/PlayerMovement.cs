@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,18 +18,15 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed = 0f;
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float runSpeed = 8f;
-
+    private bool isRunning = false;
     private Vector3 moveDirection;
     private Vector3 velocity;
-
-    // States
-    [SerializeField] private bool isGrounded = true;
-    private bool isRunning = false;
 
     [Header("Ground Test")]    
     [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private float GroundedOffset = 0.25f;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private bool isGrounded = true;
 
 
     [Header("Jumping Settings")]
@@ -48,9 +46,8 @@ public class PlayerMovement : MonoBehaviour
     public MultiAimConstraint aimConstraint;
     public Transform lookTarget;
 
-    [Header("Melee Attacks")]
+    [Header("Attacks")]
     public GameObject [] attackTriggers;
-    
 
     [Header("Dodging")]
     [SerializeField] private float dodgeDistance = 6f;
@@ -70,11 +67,13 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Freeze Effect")]
-    [SerializeField] private Renderer playerRenderer;
-    [SerializeField] private Material originalMaterial;
+    private Renderer[] renderers;
+    private Renderer[] filteredRenderers;
+
+    private Material[] originalMaterials;
     [SerializeField] private Material frozenMaterial;
-    public GameObject freezeEffect; // Visual effect for freezing
     private bool isFrozen = false;
+
 
 
     // Start is called before the first frame update
@@ -104,6 +103,20 @@ public class PlayerMovement : MonoBehaviour
         m_specialAttackAction = InputSystem.actions.FindAction("SpecialAttack");
         m_switchAction= InputSystem.actions.FindAction("Switch");
 
+        // Find all Renderers excluding particle system
+        renderers = GetComponentsInChildren<Renderer>(true);
+        filteredRenderers = renderers
+        .Where(r => r.GetComponent<ParticleSystem>() == null)
+        .ToArray();
+        originalMaterials = new Material[filteredRenderers.Length];
+
+        int i = 0;
+        foreach(Renderer rend in filteredRenderers)
+        {
+            originalMaterials[i] = rend.material;
+            i++;
+        }
+
     }
 
     void OnDrawGizmosSelected()
@@ -118,8 +131,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!this.gameObject.GetComponent<PlayerHealth>().isDefeated)
         {
-            if (m_shootAction.WasPressedThisFrame()) // Shoot Fireball
+            if (m_shootAction.WasPressedThisFrame() && shotMuzzle.CheckEnergyPoints()) // Shoot Fireball
                 animator.Play("Shoot");
+            
             else if (m_attackAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack")) // Melee Attack
                 animator.Play("Attack");
             
@@ -128,8 +142,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (m_specialAttackAction.WasPressedThisFrame()) // Unleash Special Attack
             {
-                animator.Play("ShootUp");
-                isUsingSpecial = true;
+                if (UIHandler.handler.CheckSpecialPoints(10) && !isUsingSpecial)
+                    UIHandler.handler.SetPanelActive();
             }
             
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
@@ -175,13 +189,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         OnSlopeSliding(); // Interact or Slide on steep surfaces
-
-        if (isUsingSpecial)
-        {
-            SetWeight(0.0f);
-        }
-        else
-            SetWeight(1.0f);
     }
 
     private void Move() // Move the player by changing position and/or angle
@@ -506,6 +513,46 @@ public class PlayerMovement : MonoBehaviour
         attackTriggers[move-1].GetComponent<Collider>().enabled = false;
     }
 
+    public void UseSpecial(int type)
+    {
+       switch (type)
+        {
+            case 1:
+                if (UIHandler.handler.CheckSpecialPoints(10))
+                {
+                    SetWeight(0.0f);
+                    animator.Play("ShootUp");
+                    UIHandler.handler.UpdateSpecialPoints(-10);
+                    isUsingSpecial = true;
+                    Time.timeScale = 1.0f;
+                }
+                break;
+            case 2:
+                if (UIHandler.handler.CheckSpecialPoints(20))
+                {
+                    animator.Play("BreathAttack");
+                    shotMuzzle.BreathStream();
+                    UIHandler.handler.UpdateSpecialPoints(-20);
+                    isUsingSpecial = true;
+                    Time.timeScale = 1.0f;
+                }
+
+                break;
+            case 3:
+                if (UIHandler.handler.CheckSpecialPoints(30))
+                {
+                    shotMuzzle.SetIgnited();
+                    shotMuzzle.ReplenishEnergyPoints();
+                    UIHandler.handler.UpdateSpecialPoints(-30);
+                    isUsingSpecial = true;
+                    Time.timeScale = 1.0f;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     void ShootUpward()
     {
         shotMuzzle.ShootUpward();
@@ -521,21 +568,9 @@ public class PlayerMovement : MonoBehaviour
         // No change if already frozen
         if (isFrozen) return;
 
-        // Instantiate a visual effect for freezing
-        if (freezeEffect != null)
-            Instantiate(freezeEffect, this.transform.position, this.transform.rotation);
-
-        if (playerRenderer != null && frozenMaterial != null)
+        foreach (Renderer renderer in filteredRenderers)
         {
-            // Cannot directly resize a basic array
-            Material[] currentMats = playerRenderer.materials;
-            Material[] newMats = new Material[currentMats.Length + 1];
-
-            for (int i = 0; i < currentMats.Length; i++)
-                newMats[i] = currentMats[i];
-            
-            newMats[newMats.Length - 1] = frozenMaterial;
-            playerRenderer.materials = newMats;
+            renderer.material = frozenMaterial;
         }
         
         this.enabled = false;
@@ -559,14 +594,11 @@ public class PlayerMovement : MonoBehaviour
         isFrozen = false;
         this.enabled = true;
         AudioManager.audioManager.PlaySFX(7);
-        if (playerRenderer != null && frozenMaterial != null)
+        int i = 0;
+        foreach (Renderer rend in filteredRenderers)
         {
-            Material[] currentMats = playerRenderer.materials;
-            Material[] newMats = new Material[currentMats.Length - 1];
-
-            newMats[0] = currentMats[0];
-            newMats[0] = originalMaterial;
-            playerRenderer.materials = newMats;
+            rend.material = originalMaterials[i];
+            i++;
         }
         animator.enabled = true;
     }
