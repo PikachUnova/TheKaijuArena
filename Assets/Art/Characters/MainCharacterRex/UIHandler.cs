@@ -29,6 +29,7 @@ public class UIHandler : MonoBehaviour
     [SerializeField] private int specialPoints = 0;
     public Slider specialBar;
     public GameObject specialAttacksPanel;
+    public bool isUsingSpecial = false;
 
 
 
@@ -52,6 +53,7 @@ public class UIHandler : MonoBehaviour
 
         specialBar.maxValue = maxSpecialPoints;
         specialBar.value = 0; // start from 0 points
+        SetPanelActive();
 
         if (UIHandler.handler != null)
         {
@@ -135,7 +137,6 @@ public class UIHandler : MonoBehaviour
             Time.timeScale = 1.0f;
         }
     }
-
 
     public void FadeIn()
     {

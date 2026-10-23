@@ -436,6 +436,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 70d57352547584d7384ae8d32d8fd934, type: 2}
+    - target: {fileID: 487281841872340961, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -5630300474823934144, guid: 63b53ea342d8c44a6b8d33f33eecc687, type: 3}
     - target: {fileID: 919132149155446097, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
       propertyPath: m_Name
       value: Akillios
@@ -443,6 +447,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437410760885689461, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
+      propertyPath: 'm_BlendShapeWeights.Array.data[0]'
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -485,6 +493,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7094423979445988433}
   m_SourcePrefab: {fileID: 100100000, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
+--- !u!137 &818686477139362572 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6437410760885689461, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
+  m_PrefabInstance: {fileID: 5911759534435639161}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6161048006661372050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48a336e77139649489f7d4366dad73a4, type: 3}
@@ -612,6 +625,7 @@ MonoBehaviour:
   rollSpeed: 20
   rollDuration: 2
   rollCooldown: 5
+  tailRenderer: {fileID: 818686477139362572}
 --- !u!54 &3707765833372223709
 Rigidbody:
   m_ObjectHideFlags: 0

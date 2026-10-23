@@ -12,9 +12,16 @@ public class DinoAI : EnemyAI
     protected float shootTimer = 0;
     protected bool tripleShot = false;
 
+    private TrailRenderer[] meleeRenderers;
+
     protected override void Start()
     {
         base.Start();
+        meleeRenderers = GetComponentsInChildren<TrailRenderer>(true);
+        foreach (TrailRenderer rend in meleeRenderers)
+        {
+            rend.enabled = false;
+        }
     }
 
     protected virtual void Update()
@@ -69,8 +76,16 @@ public class DinoAI : EnemyAI
             agent.isStopped = true;
         SetMovement(0f);
 
+        foreach (TrailRenderer rend in meleeRenderers)
+        {
+            rend.enabled = true;
+        }
         animator.Play("Attack");
         yield return new WaitForSeconds(attackDuration);
+        foreach (TrailRenderer rend in meleeRenderers)
+        {
+            rend.enabled = false;
+        }
 
         // Decide what the enemy does next.
         float decision = Random.value;
@@ -93,7 +108,6 @@ public class DinoAI : EnemyAI
                 if (direction.sqrMagnitude < 0.01f) break;
 
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
-
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
                 if (Quaternion.Angle(transform.rotation, targetRotation) < 2f) break;
@@ -132,7 +146,6 @@ public class DinoAI : EnemyAI
             animator.Play("Shoot");
         }
 
-        // Chase again
         currentState = EnemyState.Chase;
         if (agent.enabled && agent.isOnNavMesh)
             agent.isStopped = false;

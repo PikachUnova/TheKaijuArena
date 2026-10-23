@@ -11,11 +11,21 @@ public class AnklyoAI : EnemyAI
     [SerializeField] private float rollCooldown = 5f;
     private float rollTimer;
 
+    public SkinnedMeshRenderer tailRenderer;
+
     // Idles at first and then start the combat
     protected override void Start()
     {
         base.Start();
         StartCoroutine(Idle());
+        
+    }
+    void LateUpdate()
+    {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            tailRenderer.SetBlendShapeWeight(0, 0f);
+        else
+            tailRenderer.SetBlendShapeWeight(0, 100f);
     }
 
     void Update()
@@ -130,11 +140,9 @@ public class AnklyoAI : EnemyAI
         }
 
         animator.Play("Attack");
-
         yield return new WaitForSeconds(attackDuration);
 
         // Decide what the enemy does next.
-        
         float decision = Random.value;
         if (decision <= 0.8f)
         {

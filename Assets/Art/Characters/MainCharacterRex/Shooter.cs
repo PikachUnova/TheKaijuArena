@@ -105,6 +105,7 @@ public class PlayerShooter : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         isIgnited = false;
+        UIHandler.handler.isUsingSpecial = false;
         fireBreath.GetComponent<BoxCollider>().enabled = false;
         fireBreath.GetComponent<ParticleSystem>().Stop();
     }

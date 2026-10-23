@@ -28,7 +28,10 @@ public class PlayerHomingProjectile : BasePlayerProjectile
                 // Smoothly rotate towards the current target
                 Vector3 direction = currentTarget.position - transform.position;
                 Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                if (direction != Vector3.zero)
+                    transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                else
+                    transform.Translate(Vector3.forward * speed * Time.deltaTime);
             }
             else // If no current target, move forward based on the current rotation
                 transform.Translate(Vector3.forward * speed * Time.deltaTime);

@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         this.GetComponent<PlayerMovement>().SetWeight(0.0f);
         animator.Play("Hurt");
+        UIHandler.handler.isUsingSpecial = false;
         this.GetComponent<PlayerMovement>().SetWeight(1.0f);
         UIHandler.handler.UpdateSpecialPoints(1);
 

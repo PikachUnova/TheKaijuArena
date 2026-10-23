@@ -42,12 +42,12 @@ public class PlayerMovement : MonoBehaviour
     public CinemachineCamera freeLookCamera;  // Reference to the FreeLook Camera
     public CinemachineCamera TPCamera;  // Reference to the Virtual Camera
     private bool isAiming = false;
-    private bool isUsingSpecial = false;
     public MultiAimConstraint aimConstraint;
     public Transform lookTarget;
 
     [Header("Attacks")]
     public GameObject [] attackTriggers;
+    private TrailRenderer[] meleeRenderers;
 
     [Header("Dodging")]
     [SerializeField] private float dodgeDistance = 6f;
@@ -103,6 +103,12 @@ public class PlayerMovement : MonoBehaviour
         m_specialAttackAction = InputSystem.actions.FindAction("SpecialAttack");
         m_switchAction= InputSystem.actions.FindAction("Switch");
 
+        meleeRenderers = GetComponentsInChildren<TrailRenderer>(true);
+        foreach (TrailRenderer rend in meleeRenderers)
+        {
+            rend.enabled = false;
+        }
+
         // Find all Renderers excluding particle system
         renderers = GetComponentsInChildren<Renderer>(true);
         filteredRenderers = renderers
@@ -140,10 +146,9 @@ public class PlayerMovement : MonoBehaviour
             if (m_switchAction.WasPressedThisFrame()) // Switch Projectile
                 Switch();
 
-            if (m_specialAttackAction.WasPressedThisFrame()) // Unleash Special Attack
+            if (m_specialAttackAction.WasPressedThisFrame() && !UIHandler.handler.isUsingSpecial && UIHandler.handler.CheckSpecialPoints(10)) // Unleash Special Attack
             {
-                if (UIHandler.handler.CheckSpecialPoints(10) && !isUsingSpecial)
-                    UIHandler.handler.SetPanelActive();
+                UIHandler.handler.SetPanelActive();
             }
             
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
@@ -504,12 +509,20 @@ public class PlayerMovement : MonoBehaviour
     {
         AudioManager.audioManager.PlaySFX(3);
         SetWeight(0.0f);
+        foreach (TrailRenderer rend in meleeRenderers)
+        {
+            rend.enabled = true;
+        }
         attackTriggers[move-1].GetComponent<Collider>().enabled = true;
     }
 
     public void DisableAttackCollider(int move)
     {
         SetWeight(1.0f);
+        foreach (TrailRenderer rend in meleeRenderers)
+        {
+            rend.enabled = false;
+        }
         attackTriggers[move-1].GetComponent<Collider>().enabled = false;
     }
 
@@ -520,31 +533,38 @@ public class PlayerMovement : MonoBehaviour
             case 1:
                 if (UIHandler.handler.CheckSpecialPoints(10))
                 {
+                    UIHandler.handler.SetPanelActive();
                     SetWeight(0.0f);
                     animator.Play("ShootUp");
                     UIHandler.handler.UpdateSpecialPoints(-10);
-                    isUsingSpecial = true;
+                    UIHandler.handler.isUsingSpecial = true;
                     Time.timeScale = 1.0f;
                 }
                 break;
             case 2:
                 if (UIHandler.handler.CheckSpecialPoints(20))
                 {
+                    UIHandler.handler.SetPanelActive();
                     animator.Play("BreathAttack");
                     shotMuzzle.BreathStream();
                     UIHandler.handler.UpdateSpecialPoints(-20);
-                    isUsingSpecial = true;
+                    UIHandler.handler.isUsingSpecial = true;
                     Time.timeScale = 1.0f;
+                }
+                else
+                {
+                    Debug.Log("Weird");
                 }
 
                 break;
             case 3:
                 if (UIHandler.handler.CheckSpecialPoints(30))
                 {
+                    UIHandler.handler.SetPanelActive();
                     shotMuzzle.SetIgnited();
                     shotMuzzle.ReplenishEnergyPoints();
                     UIHandler.handler.UpdateSpecialPoints(-30);
-                    isUsingSpecial = true;
+                    UIHandler.handler.isUsingSpecial = true;
                     Time.timeScale = 1.0f;
                 }
                 break;
@@ -560,7 +580,7 @@ public class PlayerMovement : MonoBehaviour
     void RainDown()
     {
         StartCoroutine(shotMuzzle.RainDown(this.transform));
-        isUsingSpecial = false;
+        UIHandler.handler.isUsingSpecial = false;
     }
 
     public void Freeze(float time)

@@ -1427,7 +1427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3672255334526010521, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3672255334526010521, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
       propertyPath: CollisionModule.collidesWithDynamic
@@ -1536,6 +1536,10 @@ PrefabInstance:
     - target: {fileID: 7207004228509936694, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8241781661056268340, guid: 9a2eccec9593f45afb35fc21ed878863, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 16142
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
