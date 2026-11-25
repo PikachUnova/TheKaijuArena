@@ -26,8 +26,11 @@ public class FireBreath : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Enemy") && Time.time >= nextDamageTime)
             {
-                other.GetComponent<EnemyHealth>().TakeDamage(damageAmount);
-                nextDamageTime = Time.time + damageCooldown; 
+                if (!other.GetComponent<EnemyHealth>().CheckCurrentHealth())
+                {
+                    other.GetComponent<EnemyHealth>().TakeDamage(damageAmount);
+                    nextDamageTime = Time.time + damageCooldown;
+                }
             }
         }
     }

@@ -49,4 +49,9 @@ public class EnemyHealth : MonoBehaviour
         isInvulnerable = value;
     }
 
+    public bool CheckCurrentHealth()
+    {
+        return currentHealth <= 0;
+    }
+
 }
