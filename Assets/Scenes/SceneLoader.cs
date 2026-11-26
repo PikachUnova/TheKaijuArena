@@ -10,10 +10,11 @@ public class SceneLoader : MonoBehaviour
     //Navigates the Player from one scene to another
     void OnTriggerEnter(Collider other)
     {   
-        // The contacted object navigates the player 
+        // The contacted object navigates the player if (tutorial == done)
+
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("KaijuPlaza");
+            SceneManager.LoadScene("MonsterPlaza");
         }
     }
 
