@@ -11,11 +11,18 @@ public class MeleeAttackTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<PlayerHealth>().TakeDamage(stats.attackPower);
-        }
+            PlayerMovement victim = other.GetComponent<PlayerMovement>();
 
-        PlayerMovement victim = other.GetComponent<PlayerMovement>();
-        if (victim == null || victim.IsFrozen()) return;
+            if (victim != null && victim.IsFrozen()) 
+            {
+                other.GetComponent<PlayerHealth>().TakeDamage(stats.attackPower * 2); // Break ice and deal double damage
+                victim.Unfreeze();
+            }
+            else 
+            {
+                other.GetComponent<PlayerHealth>().TakeDamage(stats.attackPower);
+            }
+        }
 
 
         // Knockback

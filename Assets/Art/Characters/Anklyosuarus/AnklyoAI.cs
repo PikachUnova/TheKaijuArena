@@ -42,8 +42,11 @@ public class AnklyoAI : EnemyAI
 
             case EnemyState.Chase:
                 rollTimer += Time.deltaTime;
-                agent.isStopped = false;
-                agent.SetDestination(player.position);
+                if (agent.enabled && agent.isOnNavMesh)    
+                {            
+                    agent.isStopped = false;
+                    agent.SetDestination(player.position);
+                }
                 SetMovement(1f);
 
                 if (distance <= attackRange)

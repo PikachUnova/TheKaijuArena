@@ -12,18 +12,22 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-
             EnemyHealth enemy = other.GetComponentInParent<EnemyHealth>();
             if (enemy.currentHealth <= 0) return; // Do nothing
 
-            if (enemy != null)
+            EnemyAI victim = other.GetComponent<EnemyAI>();
+            if (victim != null && victim.IsFrozen()) 
+            {
+                enemy.TakeDamage(stats.attackPower * 2); // Break ice and deal double damage
+                UIHandler.handler.UpdateSpecialPoints(2);
+                victim.Unfreeze();
+            }
+            else 
             {
                 enemy.TakeDamage(stats.attackPower);
                 UIHandler.handler.UpdateSpecialPoints(1);
             }
 
-            if (other.GetComponent<EnemyAI>().IsFrozen())
-                return;
 
             // Knockback
             NavMeshAgent agent = other.GetComponentInParent<NavMeshAgent>();

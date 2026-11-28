@@ -25,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
         UIHandler.handler.SetHP(UIHandler.handler.GetHP() - damage);
         currentHealth -= damage;
         this.GetComponent<PlayerMovement>().SetWeight(0.0f);
-        animator.Play("Hurt");
         UIHandler.handler.isUsingSpecial = false;
         this.GetComponent<PlayerMovement>().SetWeight(1.0f);
         UIHandler.handler.UpdateSpecialPoints(1);
@@ -36,6 +35,8 @@ public class PlayerHealth : MonoBehaviour
             UIHandler.handler.SetHP(0);
             Faint();
         }
+        else
+            animator.Play("Hurt");
     }
 
     private void Faint()

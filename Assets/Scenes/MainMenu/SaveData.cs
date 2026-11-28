@@ -16,4 +16,9 @@ public class SaveData
         playerSkills = 0;
         
     }
+
+    public bool HasSavedGame()
+    {
+        return currentLevel > 0;
+    }
 }

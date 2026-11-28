@@ -50,8 +50,13 @@ public class PlayerHomingProjectile : BasePlayerProjectile
 
         foreach (GameObject enemy in enemies)
         {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+            if (enemyHealth == null || enemyHealth.currentHealth <= 0)
+            {
+                continue;
+            }
 
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
             if (distance <= 200 && distance < nearestDistance)
             {
                 nearestDistance = distance;

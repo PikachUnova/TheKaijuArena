@@ -23,10 +23,11 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
-        animator.Play("Hurt");
 
         if (currentHealth <= 0)
             Faint();
+        else
+            animator.Play("Hurt");
     }
 
     public void Faint()
